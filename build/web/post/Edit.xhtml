@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPostTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditPostLabel_totalRooms}" for="totalRooms" />
+                    <h:inputText id="totalRooms" value="#{postController.selected.totalRooms}" title="#{bundle.EditPostTitle_totalRooms}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_currentHolders}" for="currentHolders" />
+                    <h:inputText id="currentHolders" value="#{postController.selected.currentHolders}" title="#{bundle.EditPostTitle_currentHolders}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_addressStreet}" for="addressStreet" />
+                    <h:inputText id="addressStreet" value="#{postController.selected.addressStreet}" title="#{bundle.EditPostTitle_addressStreet}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_addressCity}" for="addressCity" />
+                    <h:inputText id="addressCity" value="#{postController.selected.addressCity}" title="#{bundle.EditPostTitle_addressCity}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_addressState}" for="addressState" />
+                    <h:inputText id="addressState" value="#{postController.selected.addressState}" title="#{bundle.EditPostTitle_addressState}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_roomDescription}" for="roomDescription" />
+                    <h:inputText id="roomDescription" value="#{postController.selected.roomDescription}" title="#{bundle.EditPostTitle_roomDescription}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_expectedRoomieNumber}" for="expectedRoomieNumber" />
+                    <h:inputText id="expectedRoomieNumber" value="#{postController.selected.expectedRoomieNumber}" title="#{bundle.EditPostTitle_expectedRoomieNumber}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_pricePerMonth}" for="pricePerMonth" />
+                    <h:inputText id="pricePerMonth" value="#{postController.selected.pricePerMonth}" title="#{bundle.EditPostTitle_pricePerMonth}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_requiredGender}" for="requiredGender" />
+                    <h:inputText id="requiredGender" value="#{postController.selected.requiredGender}" title="#{bundle.EditPostTitle_requiredGender}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_minimumAge}" for="minimumAge" />
+                    <h:inputText id="minimumAge" value="#{postController.selected.minimumAge}" title="#{bundle.EditPostTitle_minimumAge}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_maximumAge}" for="maximumAge" />
+                    <h:inputText id="maximumAge" value="#{postController.selected.maximumAge}" title="#{bundle.EditPostTitle_maximumAge}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_rommieQualities}" for="rommieQualities" />
+                    <h:inputText id="rommieQualities" value="#{postController.selected.rommieQualities}" title="#{bundle.EditPostTitle_rommieQualities}" />
+                    <h:outputLabel value="#{bundle.EditPostLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{postController.selected.id}" title="#{bundle.EditPostTitle_id}" />
+                </h:panelGrid>
+                <h:commandLink action="#{postController.update}" value="#{bundle.EditPostSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditPostViewLink}"/>
+                <br />
+                <h:commandLink action="#{postController.prepareList}" value="#{bundle.EditPostShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditPostIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

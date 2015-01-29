@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewPostTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewPostLabel_totalRooms}"/>
+                    <h:outputText value="#{postController.selected.totalRooms}" title="#{bundle.ViewPostTitle_totalRooms}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_currentHolders}"/>
+                    <h:outputText value="#{postController.selected.currentHolders}" title="#{bundle.ViewPostTitle_currentHolders}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_addressStreet}"/>
+                    <h:outputText value="#{postController.selected.addressStreet}" title="#{bundle.ViewPostTitle_addressStreet}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_addressCity}"/>
+                    <h:outputText value="#{postController.selected.addressCity}" title="#{bundle.ViewPostTitle_addressCity}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_addressState}"/>
+                    <h:outputText value="#{postController.selected.addressState}" title="#{bundle.ViewPostTitle_addressState}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_roomDescription}"/>
+                    <h:outputText value="#{postController.selected.roomDescription}" title="#{bundle.ViewPostTitle_roomDescription}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_expectedRoomieNumber}"/>
+                    <h:outputText value="#{postController.selected.expectedRoomieNumber}" title="#{bundle.ViewPostTitle_expectedRoomieNumber}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_pricePerMonth}"/>
+                    <h:outputText value="#{postController.selected.pricePerMonth}" title="#{bundle.ViewPostTitle_pricePerMonth}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_requiredGender}"/>
+                    <h:outputText value="#{postController.selected.requiredGender}" title="#{bundle.ViewPostTitle_requiredGender}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_minimumAge}"/>
+                    <h:outputText value="#{postController.selected.minimumAge}" title="#{bundle.ViewPostTitle_minimumAge}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_maximumAge}"/>
+                    <h:outputText value="#{postController.selected.maximumAge}" title="#{bundle.ViewPostTitle_maximumAge}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_rommieQualities}"/>
+                    <h:outputText value="#{postController.selected.rommieQualities}" title="#{bundle.ViewPostTitle_rommieQualities}"/>
+                    <h:outputText value="#{bundle.ViewPostLabel_id}"/>
+                    <h:outputText value="#{postController.selected.id}" title="#{bundle.ViewPostTitle_id}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{postController.destroyAndView}" value="#{bundle.ViewPostDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewPostEditLink}"/>
+                <br />
+                <h:commandLink action="#{postController.prepareCreate}" value="#{bundle.ViewPostCreateLink}" />
+                <br />
+                <h:commandLink action="#{postController.prepareList}" value="#{bundle.ViewPostShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewPostIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

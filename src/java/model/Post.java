@@ -22,6 +22,116 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private int totalRooms;
+    private int currentHolders;
+    private String addressStreet;
+    private String addressCity;
+    private String addressState;
+    private String roomDescription;
+    private int expectedRoomieNumber;
+    private Double pricePerMonth;
+    private String requiredGender;
+    private int minimumAge;
+    private int maximumAge;
+    private String rommieQualities;
+
+    public int getTotalRooms() {
+        return totalRooms;
+    }
+
+    public void setTotalRooms(int totalRooms) {
+        this.totalRooms = totalRooms;
+    }
+
+    public int getCurrentHolders() {
+        return currentHolders;
+    }
+
+    public void setCurrentHolders(int currentHolders) {
+        this.currentHolders = currentHolders;
+    }
+
+    public String getAddressStreet() {
+        return addressStreet;
+    }
+
+    public void setAddressStreet(String addressStreet) {
+        this.addressStreet = addressStreet;
+    }
+
+    public String getAddressCity() {
+        return addressCity;
+    }
+
+    public void setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
+    }
+
+    public String getAddressState() {
+        return addressState;
+    }
+
+    public void setAddressState(String addressState) {
+        this.addressState = addressState;
+    }
+
+    public String getRoomDescription() {
+        return roomDescription;
+    }
+
+    public void setRoomDescription(String roomDescription) {
+        this.roomDescription = roomDescription;
+    }
+
+    public int getExpectedRoomieNumber() {
+        return expectedRoomieNumber;
+    }
+
+    public void setExpectedRoomieNumber(int expectedRoomieNumber) {
+        this.expectedRoomieNumber = expectedRoomieNumber;
+    }
+
+    public Double getPricePerMonth() {
+        return pricePerMonth;
+    }
+
+    public void setPricePerMonth(Double pricePerMonth) {
+        this.pricePerMonth = pricePerMonth;
+    }
+
+    public String getRequiredGender() {
+        return requiredGender;
+    }
+
+    public void setRequiredGender(String requiredGender) {
+        this.requiredGender = requiredGender;
+    }
+
+    public int getMinimumAge() {
+        return minimumAge;
+    }
+
+    public void setMinimumAge(int minimumAge) {
+        this.minimumAge = minimumAge;
+    }
+
+    public int getMaximumAge() {
+        return maximumAge;
+    }
+
+    public void setMaximumAge(int maximumAge) {
+        this.maximumAge = maximumAge;
+    }
+
+    public String getRommieQualities() {
+        return rommieQualities;
+    }
+
+    public void setRommieQualities(String rommieQualities) {
+        this.rommieQualities = rommieQualities;
+    }
+    
 
     public Long getId() {
         return id;
