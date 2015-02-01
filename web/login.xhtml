@@ -111,34 +111,23 @@
                                 <div class="modal-body">
                                     <p>If you have an account with us, please enter your details below.</p>
                                     <p id="errMsg" style="margin:3px;color:red"></p>
-                                    <h:form>
-
-                                        <div class="form-group">
-                                                <h:inputText class="form-control" id="email" value="#{loginController.email}" />
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <h:inputSecret class="form-control" id="password" value="#{loginController.password}" />
-                                        </div>
-                                        
-                                        <div class="row">
-                                            <div class="col-md-6">
-
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h:commandButton action="#{loginController.login}" class="btn btn-primary pull-right"  type="submit" value="Login" />
-                                                <img class="ajax-loader" style="visibility:hidden;margin:10px;" src="ajax-loader.gif"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-<!--                                                <a data-toggle="modal" href="forgetpwd.html">Forgot your password?</a>-->
-                                                <h:commandLink action="#{loginController.forgotPassword}" value="Forgot your password?"/>
-                                            </div>
-                                        </div>
-
-                                    </h:form>
+                                    
+                                    <form method='post' action='j_security_check'>
+                                        <h:messages layout='table' errorStyle='background: #AFEEEE;'
+                                         infoStyle='background: #AFEEEE;' globalOnly='true' />
+                                        <h:panelGrid columns='2'>
+                                         <h:outputLabel value='Username ' />
+                                         <input type='text' id='j_username' name='j_username' />
+                                         <h:outputLabel value='Password ' />
+                                         <input type='password' id='j_password' name='j_password' />
+                                         <h:outputText value='' />
+                                         <h:panelGrid columns='1'>
+                                          <input type='submit' name='submit' value='Login' />
+                                         </h:panelGrid>
+                                        </h:panelGrid>
+                                        <br />
+                                   </form>
+                                    
                                 </div>
 
                                 <div class="modal-footer" style="text-align: center">

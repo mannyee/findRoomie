@@ -8,9 +8,11 @@
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
   </jsp-config>
+  
   <security-role-mapping>
-    <role-name>MEMBER</role-name>
-    <principal-name>MEMBER</principal-name>
-    <group-name>MEMBER</group-name>
+        <role-name>MEMBER</role-name>
+        <principal-name>MEMBER</principal-name>
+        <group-name>MEMBER</group-name>
   </security-role-mapping>
+  
 </glassfish-web-app>

@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import model.User;
 
 /**
@@ -50,31 +51,7 @@ public class LoginController {
     
 
     
-    public void login(){
-        user = userFacade.findByUsernamePassword(email, password);
-        
-        System.out.println("hello world");
-        
-        //System.out.println("user.toString(): " + user.toString());
-        
-        if(user == null){
-            System.out.println("user object is null");
-            // set some error msg to be displayed
-            return;
-        }else{
-            System.out.println("inside else");
-            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            
-            try {
-                ec.getSessionMap().put("user", user);
-                ec.redirect(ec.getRequestContextPath() + "/faces/pages/user/dashboard.xhtml");
-            } catch (IOException ex) {
-
-        }
-
-        }
-        
-    }
+    
     
     
     public String register(){
@@ -95,9 +72,14 @@ public class LoginController {
     
     public void logout() throws IOException {
         user = null;
+        
+//         getRequest().getSession().invalidate();
+         HttpServletRequest hsr = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+         hsr.getSession().invalidate();
+         
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.invalidateSession();
-        ec.redirect(ec.getRequestContextPath() + "/faces/" + "index.xhtml");
+        ec.redirect(ec.getRequestContextPath() + "/faces/" + "login.xhtml");
 
     }
     

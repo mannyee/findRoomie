@@ -1,17 +1,119 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-        <h:form>
-            <h:commandButton value="Logout" action="#{loginController.logout()}" />
-        </h:form>
-        
-        
-    </h:body>
-</html>
 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" >
+<h:head></h:head>
+<h:body>
+    <ui:composition template="/pages/template/main_layout.xhtml">
+        <ui:define name="content">
+ 
+            <div class="row">
+
+                <div class="col-sm-3">
+                    <div class="sidebar-account">		
+                        <div class="row ">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Welcome:<i> Session Member</i></div>
+                                    <div class="panel-body">
+                                        <ul class="nav">
+                                            <li>
+                                                <a href="dashboard.html" class="link_men">Dashboard</a>
+                                            </li>						
+                                            <li>
+                                                <a href="changeProfile.html" class="link_men">My Profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="listMyRooms.html" class="link_men">Manage My Rooms</a>
+                                            </li>
+                                            <li>
+                                                <a href="addNewPost.html" class="link_men">Post New Room</a>
+                                            </li>
+                                            <li>
+                                                <a href="logout.html" class="link_men">Logout</a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>       
+                </div>
+
+                <div class="col-sm-9">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Dashboard</div>
+                        <div class="panel-body">
+                            <style type="text/css">
+                                .dash li{
+                                    list-style-type: none;
+                                    margin:15px;
+                                    display:inherit;
+                                    float:left;
+                                }
+                                .link_men{background:#d5d5c6;margin:3px;margin-top:10px;border: 1px solid #999999}
+                                .dash li a {font-size:16px;}
+                            </style>
+                            <div class="row">
+
+                                <div class="col-sm-12">
+                                    <ul class="dash">
+                                        <li>
+                                            <a class="delete btn btn-info btn-sm active"  href="#" >Dashboard</a>
+                                        </li>						
+                                        <li>
+                                            <a class="delete btn btn-info btn-sm active" href="#">My Profile</a>
+                                        </li>
+                                        <li>
+                                            <a class="delete btn btn-info btn-sm active" href="#" >Manage My Rooms</a>
+                                        </li>
+                                        <li>
+                                            <a class="delete btn btn-info btn-sm active" href="#">Post New Room</a>
+                                        </li>
+                                        <li>
+                                            <a  class="delete btn btn-info btn-sm active" href="#">Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <br/>
+                            <div class="row">
+
+                                <div style="border-right: 1px solid #DADADA; text-align: center;" class="col-sm-3 col-xs-6">
+                                    <h3 style="text-align: center;">Total credits</h3>
+                                    <p></p>
+                                </div>
+
+                                <div style="border-right: 1px solid #DADADA; text-align: center;" class="col-sm-3 col-xs-6">
+                                    <h3 style="text-align: center;">Sites published</h3>
+                                    <p></p>
+                                </div>
+
+                                <div style="border-right: 1px solid #DADADA; text-align: center;" class="col-sm-3 col-xs-6">
+                                    <h3 style="text-align: center;">Views this month</h3>
+                                    <p></p>
+                                </div>
+
+                                <div style="text-align: center;" class="col-sm-3 col-xs-6">
+                                    <h3 style="text-align: center;">Total Sites views</h3>
+                                    <p></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                 
+        </ui:define>
+    </ui:composition>
+    
+</h:body>
+</html>
