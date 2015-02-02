@@ -3,8 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/xtrememe/NetBeansProjects/findRoomie/web/WEB-INF/web.xml</file>
-            <file>file:/home/xtrememe/NetBeansProjects/findRoomie/web/pages/user/dashboard.xhtml</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/src/java/ejb/AddressFacade.java</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/src/java/ejb/AdminFacade.java</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/web/pages/user/post.xhtml</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/src/java/controller/PostController.java</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/src/java/ejb/PostFacade.java</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/src/java/model/Post.java</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/src/java/controller/LoginController.java</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/src/java/ejb/MemberFacade.java</file>
+            <file>file:/C:/Users/Ashok%20Subedi/Documents/NetBeansProjects/EAProject/findRoomie/src/java/ejb/UserFacade.java</file>
         </group>
     </open-files>
 </project-private>
