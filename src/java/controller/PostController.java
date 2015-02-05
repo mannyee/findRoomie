@@ -6,6 +6,7 @@
 package controller;
 
 import ejb.PostFacade;
+import javafx.scene.input.KeyCode;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -38,6 +39,7 @@ public class PostController {
     
     public String postThisPost(){
         this.postFacade.create(myPost);
-        return "index";
+        System.out.println("okhere");
+        return "dashboard";
     }    
 }
