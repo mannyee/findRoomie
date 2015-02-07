@@ -23,20 +23,27 @@ public class UserFacade extends AbstractFacade<User> {
     public UserFacade() {
         super(User.class);
     }
-    
-    public User findByUsernamePassword(String email, String password) {
-        System.out.println("email: " + email + " password: " + password);
+    public User findUserByEmail(String email) {
         try {
-            String jpql = "SELECT u FROM User_Info u WHERE  u.email = :email AND u.password = :password";
-            Query query = getEntityManager().createQuery(jpql, User.class);
-            query.setParameter("email", email);
-            query.setParameter("password", password);
-            System.out.println("inside if");
-            return (User) query.getSingleResult();
+            Query userNameQuery = em.createNamedQuery("User.findByEmail");
+            userNameQuery.setParameter("email", email);
+            User foundUser = (User) userNameQuery.getSingleResult();
+            return foundUser;
         } catch (Exception e) {
-            System.out.println("inside catch");
             return null;
         }
     }
+//    public User findUserByEmail(String email) {
+//        try {
+//            String jpql = "SELECT u FROM User u WHERE  u.email = :email";
+//            Query query = getEntityManager().createQuery(jpql, User.class);
+//            query.setParameter("email", email);
+//            User myUser=(User) query.getSingleResult();
+//            return myUser;
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+    
     
 }

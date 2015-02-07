@@ -19,7 +19,7 @@ import model.User;
 public class LoginController {
     @EJB
     private UserFacade userFacade;
-    private User user;
+    public User user;
     private String userName;
     private String password;
     private String email;

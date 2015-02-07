@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -13,8 +15,15 @@ import javax.persistence.TemporalType;
  *
  * @author xtrememe
  */
-@Entity(name="User_Info")
+@Entity(name = "User_Info")
+//derby reserves the name User -- so we rename to MUSER
+@NamedQueries({
+    //notice since we are using JPQL we select from User (not MUSER)
+    @NamedQuery(name = "User.findByEmail",
+        query = "SELECT u FROM User u WHERE u.email = :email")    
+})
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,9 +36,74 @@ public class User implements Serializable {
     private String email;
     @Temporal(TemporalType.TIMESTAMP)
     private Date registeredDate;
+
 //    @Embedded
 //    private Address address;
     private String profilePic;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getRegisteredDate() {
+        return registeredDate;
+    }
+
+    public void setRegisteredDate(Date registeredDate) {
+        this.registeredDate = registeredDate;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
 
     public Long getId() {
         return id;
@@ -61,7 +135,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "model.User[ id=" + id + " ]";
+        return "model.User[ id=" + id + " ] email=" + email;
     }
-    
+
 }

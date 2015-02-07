@@ -9,7 +9,7 @@ import javax.persistence.Id;
  * @author xtrememe
  */
 @Entity
-public class Member implements Serializable {
+public class Member extends User implements Serializable {
     @Id
     private Long id;
     
