@@ -20,29 +20,12 @@ public class LoginController {
     @EJB
     private UserFacade userFacade;
     private User user;
-    private String userName;
-    private String password;
     private String email;
 
     public String getEmail() {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -67,19 +50,41 @@ public class LoginController {
     
     
     public String forgotPassword(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/faces/forgotPassword.xhtml");
+        } catch (IOException ex) {
+
+        }
+        
         return "";
     }
     
     public void logout() throws IOException {
         user = null;
         
-//         getRequest().getSession().invalidate();
-         HttpServletRequest hsr = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-         hsr.getSession().invalidate();
+        HttpServletRequest hsr = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        hsr.getSession().invalidate();
          
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.invalidateSession();
         ec.redirect(ec.getRequestContextPath() + "/faces/" + "login.xhtml");
+        
+        
+//        String result="/index?faces-redirect=true";
+     
+//    FacesContext context = FacesContext.getCurrentInstance();
+//    HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
+//     
+//    try {
+//      request.logout();
+//    } catch (ServletException e) {
+//      log.log(Level.SEVERE, "Failed to logout user!", e);
+//      result = "/loginError?faces-redirect=true";
+//    }
+//     
+//    return result;
 
     }
     

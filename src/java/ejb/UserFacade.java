@@ -1,5 +1,7 @@
 package ejb;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,19 +26,25 @@ public class UserFacade extends AbstractFacade<User> {
         super(User.class);
     }
     
-    public User findByUsernamePassword(String email, String password) {
-        System.out.println("email: " + email + " password: " + password);
+    public User findByEmail(String email){
         try {
-            String jpql = "SELECT u FROM User_Info u WHERE  u.email = :email AND u.password = :password";
+            String jpql = "SELECT TRUE FROM APP.USER_INFO WHERE id = 1";
             Query query = getEntityManager().createQuery(jpql, User.class);
-            query.setParameter("email", email);
-            query.setParameter("password", password);
-            System.out.println("inside if");
+            //query.setParameter("email", email);
             return (User) query.getSingleResult();
         } catch (Exception e) {
-            System.out.println("inside catch");
+            
+            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
+    }
+    
+    public int updatePassword(String password, String email){
+        String jpql = "UPDATE APP.USER_INFO SET password = :pwd WHERE email = :email";
+        Query query = em.createQuery(jpql, User.class);
+        query.setParameter("pwd", password);
+        query.setParameter("email", email);
+        return query.executeUpdate();
     }
     
 }
