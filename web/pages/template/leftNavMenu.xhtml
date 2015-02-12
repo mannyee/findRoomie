@@ -6,15 +6,18 @@
     <div class="panel-heading">
         Welcome:<i> #{loginController.displayName()}</i>
     </div>
-    
+    <h:form>
     <div class="panel-body">
         <ul class="nav">
-            <h:form>
+            
                 <li>
                     <h:link class="link_men" value="Dashboard"
                                    outcome="/faces/pages/user/dashboard.xhtml" />
                 </li>
-                
+                <li>
+                    <h:link class="link_men" value="Search Rooms"
+                                   outcome="/faces/pages/user/searchRooms.xhtml" />
+                </li>
                 <li>
                     <h:commandLink class="link_men" value="My Profile"
                                    action="#{loginController.updateProfile}" />
@@ -35,10 +38,10 @@
                                    action="#{loginController.logout}" />
                 </li>
                                                 
-            </h:form>
+            
         </ul>
 
     </div>
-
+   </h:form>
 </ui:composition>
 
