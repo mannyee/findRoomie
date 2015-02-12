@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -13,7 +14,8 @@ import javax.persistence.TemporalType;
  *
  * @author xtrememe
  */
-@Entity(name="User_Info")
+@Entity
+@Table(name="User_Info")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,6 +29,24 @@ public class User implements Serializable {
     private String email;
     @Temporal(TemporalType.TIMESTAMP)
     private Date registeredDate;
+    private String dType;
+    private String role;
+
+    public String getdType() {
+        return dType;
+    }
+
+    public void setdType(String dType) {
+        this.dType = dType;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getUserName() {
         return userName;

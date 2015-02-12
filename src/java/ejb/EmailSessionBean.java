@@ -9,6 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -43,63 +47,78 @@ public class EmailSessionBean {
      * 
      * @params to Email id to which to send an email
      */
-    public void sendEmail(String to){
+    public boolean sendEmail(String to){
+        boolean flag = false;
         String subject = "New Password - FindRoomie";
         String body = "New Password for you FindRoomie account: " + generateNewPassword();
                 
         
         // update the password in the table
         user = userFacade.findByEmail(to);
-        System.out.println("New password again: " + encryptToSha256(generateNewPassword()));
-        System.out.println("user.id: " + user.getId() + " and user firstname: " + user.getFirstName());
-        
-        user.setPassword(encryptToSha256(generateNewPassword()));
-        userFacade.edit(user);
+
+        if(user != null){
+            
+            System.out.println("user is not null");
+            
+            user.setPassword(encryptToSha256(generateNewPassword()));
+            userFacade.edit(user);
         
         
                 
-        Properties props = new Properties();
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.port", port);
-        switch(protocol){
-            case SMTPS:
-                props.put("mail.smtp.ssl.enable", true);
-                break;
-            case TLS:
-               props.put("mail.smtp.starttls.enable", true);
-                break;
-        }
+            Properties props = new Properties();
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", port);
+        
+            switch(protocol){
+                case SMTPS:
+                    props.put("mail.smtp.ssl.enable", true);
+                    break;
+                case TLS:
+                   props.put("mail.smtp.starttls.enable", true);
+                    break;
+            }
         
         
-        Authenticator authenticator = null;
-        if (auth) {
-            props.put("mail.smtp.auth", true);
-            authenticator = new Authenticator() {
-                private PasswordAuthentication pa = new PasswordAuthentication(username, password);
-                @Override
-                public PasswordAuthentication getPasswordAuthentication() {
-                    return pa;
-                }
-            };
-        }
+            Authenticator authenticator = null;
+        
+            if (auth) {
+                props.put("mail.smtp.auth", true);
+                    authenticator = new Authenticator() {
+                        private PasswordAuthentication pa = new PasswordAuthentication(username, password);
 
-        Session session = Session.getInstance(props, authenticator);
-        session.setDebug(debug);
+                        @Override
+                        public PasswordAuthentication getPasswordAuthentication() {
+                        return pa;
+                    }
+                };
+            }
 
-        MimeMessage message = new MimeMessage(session);
-        try {
-            message.setFrom(new InternetAddress(from));
-            InternetAddress[] address = {new InternetAddress(to)};
-            message.setRecipients(Message.RecipientType.TO, address);
-            message.setSubject(subject);
-            message.setSentDate(new Date());
-            message.setText(body);
-            
-            Transport.send(message);
-        } catch (MessagingException ex) {
-            
-            Logger.getLogger(EmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+            Session session = Session.getInstance(props, authenticator);
+            session.setDebug(debug);
+
+            MimeMessage message = new MimeMessage(session);
+            try {
+                message.setFrom(new InternetAddress(from));
+                InternetAddress[] address = {new InternetAddress(to)};
+                message.setRecipients(Message.RecipientType.TO, address);
+                message.setSubject(subject);
+                message.setSentDate(new Date());
+                message.setText(body);
+
+                Transport.send(message);
+
+                flag = true;
+                
+            } catch (MessagingException ex) {
+
+                Logger.getLogger(EmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+
+                flag = false;
+            }
         }
+        
+        return flag;
+        
     }
     
     
@@ -118,7 +137,7 @@ public class EmailSessionBean {
      *
      * @params password String to be encoded
      */
-    private String encryptToSha256(String password){
+    public String encryptToSha256(String password){
         String encodedPwd = null;
         
         try {

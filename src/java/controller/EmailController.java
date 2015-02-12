@@ -2,14 +2,12 @@ package controller;
 
 import ejb.EmailSessionBean;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.faces.context.Flash;
 
 /**
  *
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ManagedBean
 @RequestScoped
-public class EmailController {
+public class EmailController extends BaseController{
     @EJB
     private EmailSessionBean emailSessionBean;
     private String email;
@@ -38,38 +36,26 @@ public class EmailController {
     }
     
     
-    public void sendEmail(){
+    public String sendEmail() throws IOException{
         
+        if(emailSessionBean.sendEmail(email)){
+
+            getFlash().putNow("msg", "Please login using the password mailed to you");
+            getFlash().putNow("class", "success");
+            
+        }else{
+            getFlash().putNow("msg", "An error occured while resetting your password. Please try again later.");
+            getFlash().putNow("class", "error");
+        }
         
-//        response.setContentType("text/html;charset=UTF-8");
-//        
-//        PrintWriter out = response.getWriter();
-//        
-//        try {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet EmailServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet EmailServlet at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        } finally {
-//            out.close();
-//        }
+        getEc().redirect(getEc().getRequestContextPath() + "/faces/login.xhtml");
         
-        emailSessionBean.sendEmail(email);
-        
-        
-    
+        return "";
     }
     
     public void forgotPassword() throws IOException{
          
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.redirect(ec.getRequestContextPath() + "/faces/" + "forgotPassword.xhtml");
+        getEc().redirect(getEc().getRequestContextPath() + "/faces/forgotPassword.xhtml");
     
     }
 }

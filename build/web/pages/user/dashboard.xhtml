@@ -17,27 +17,7 @@
                         <div class="row ">
                             <div class="col-lg-12">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Welcome:<i> Session Member</i></div>
-                                    <div class="panel-body">
-                                        <ul class="nav">
-                                            <li>
-                                                <a href="dashboard.html" class="link_men">Dashboard</a>
-                                            </li>						
-                                            <li>
-                                                <a href="changeProfile.html" class="link_men">My Profile</a>
-                                            </li>
-                                            <li>
-                                                <a href="listMyRooms.html" class="link_men">Manage My Rooms</a>
-                                            </li>
-                                            <li>
-                                                <a href="addNewPost.html" class="link_men">Post New Room</a>
-                                            </li>
-                                            <li>
-                                                <a href="logout.html" class="link_men">Logout</a>
-                                            </li>
-                                        </ul>
-
-                                    </div>
+                                    <ui:include src="../template/leftNavMenu.xhtml" />
                                 </div>
                             </div>
                         </div>
@@ -59,29 +39,41 @@
                                 .link_men{background:#d5d5c6;margin:3px;margin-top:10px;border: 1px solid #999999}
                                 .dash li a {font-size:16px;}
                             </style>
-                            <div class="row">
+                            <h:form>
+                                <div class="row">
 
-                                <div class="col-sm-12">
-                                    <ul class="dash">
-                                        <li>
-                                            <a class="delete btn btn-info btn-sm active"  href="#" >Dashboard</a>
-                                        </li>						
-                                        <li>
-                                            <a class="delete btn btn-info btn-sm active" href="#">My Profile</a>
-                                        </li>
-                                        <li>
-                                            <a class="delete btn btn-info btn-sm active" href="#" >Manage My Rooms</a>
-                                        </li>
-                                        <li>
-                                            <a class="delete btn btn-info btn-sm active" href="#">Post New Room</a>
-                                        </li>
-                                        <li>
-                                            <a  class="delete btn btn-info btn-sm active" href="#">Logout</a>
-                                        </li>
-                                    </ul>
+                                    <div class="col-sm-12">
+                                        <ul class="dash">
+                                            <li>
+                                                <h:commandLink class="delete btn btn-info btn-sm active" 
+                                                               action="#{loginController.logout()}"
+                                                               value="Dashboard"/>
+                                            </li>
+                                            <li>
+                                                <h:commandLink class="delete btn btn-info btn-sm active" 
+                                                               action="#{loginController.logout()}"
+                                                               value="My Profile"/>
+                                            </li>
+                                            <li>
+                                                <h:commandLink class="delete btn btn-info btn-sm active" 
+                                                               action="#{loginController.logout()}"
+                                                               value="Manage My Rooms"/>
+                                            </li>
+                                            <li>
+                                                <h:commandLink class="delete btn btn-info btn-sm active" 
+                                                               action="#{loginController.logout()}"
+                                                               value="Post New Room"/>
+                                            </li>
+                                            <li>
+                                                <h:commandLink class="delete btn btn-info btn-sm active" 
+                                                               action="#{loginController.logout()}"
+                                                               value="Logout"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                 </div>
-
-                            </div>
+                            </h:form>
                             <br/>
                             <div class="row">
 

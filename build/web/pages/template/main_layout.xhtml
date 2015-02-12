@@ -30,6 +30,7 @@
         
         
         <link rel="shortcut icon" href="resources/images/favicon.png" />
+        
             
         <h:outputScript name ="resources/js/jquery-2.0.3.min.js" />
         <h:outputScript name="resources/js/bootstrap.js" /> 
@@ -43,7 +44,8 @@
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <img src="resources/images/logo.jpg" title="findroomie" height="44"  width="65" alt="findroomie"/>
+                    <h:graphicImage width="65" height="44" title="findroomie" alt="findroomie" value="/faces/resources/images/logo.jpg" />
+
                 </div>
 
                 <div class="collapse navbar-collapse">
@@ -76,7 +78,7 @@
                         <div class="col-sm-12">
                             <div class="navbar-header">
                                 <div class="logo-home" style="float:left;margin-top:-30px;margin-left:6px">
-                                    <img src="resources/images/home.png" style="" width="50" height="45" title="findroomie" alt="findroomie"/>
+                                    <h:graphicImage width="50" height="45" title="findroomie" alt="findroomie" value="/faces/resources/images/home.png" />
                                 </div>                                
                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                     <span class="icon-bar"></span>
@@ -94,6 +96,10 @@
                 </div>
             </div>
         </div>
+        
+        <!-- This section is for displaying the messages -->
+        <div class="#{flash.class}">#{flash.msg}</div>
+        
         <div class="container">
             <ui:insert name="content">
                 

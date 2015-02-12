@@ -22,22 +22,19 @@
         <welcome-file>faces/pages/user/dashboard.xhtml</welcome-file>
         <welcome-file>faces/pages/user/signup.xhtml</welcome-file>
     </welcome-file-list>
-    
     <!-- Protected area definition -->
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Restricted Area - ADMIN Only</web-resource-name>
-            <url-pattern>/faces/pages/user/*</url-pattern> <!-- no faces when it worked -->
+            <url-pattern>/faces/pages/user/*</url-pattern>
+            <!-- no faces when it worked -->
             <url-pattern>/faces/helloBrother.xhtml</url-pattern>
             <url-pattern>/faces/pages/template/helloWorld.xhtml</url-pattern>
         </web-resource-collection>
-        
         <auth-constraint>
             <role-name>MEMBER</role-name>
         </auth-constraint>
     </security-constraint>
-    
-
     <!-- Login page -->
     <login-config>
         <auth-method>FORM</auth-method>
@@ -47,17 +44,24 @@
             <form-error-page>/faces/error.xhtml</form-error-page>
         </form-login-config>
     </login-config>
-
     <!-- System roles -->
     <security-role>
-     <role-name>ADMIN</role-name>
+        <role-name>ADMIN</role-name>
     </security-role>
     <security-role>
-     <role-name>MEMBER</role-name>
+        <role-name>MEMBER</role-name>
     </security-role>
-
     <security-role>
-     <role-name>GUEST</role-name>
+        <role-name>GUEST</role-name>
     </security-role>
-    
+    <!-- Login filter so that we can handle request and response  -->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>ejb.filters.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/faces/pages/user/dashboard.xhtml</url-pattern>
+    </filter-mapping>
+   
 </web-app>
