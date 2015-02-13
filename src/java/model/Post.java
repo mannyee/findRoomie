@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -35,7 +37,7 @@ public class Post implements Serializable {
     private Double pricePerMonth;
     private String requiredGender;
     private String requiredCountry;
-    private int minimumAge;    
+    private int minimumAge;
     private int maximumAge;
     private String rommieQualities;
     private List<String> images;
@@ -43,6 +45,10 @@ public class Post implements Serializable {
     @JoinColumn(name = "userId",referencedColumnName = "id")
     @ManyToOne
     private User postedBy;   
+
+	@OneToMany
+    @JoinTable(name="POST_COMMENTS")
+    private List <Comment> comments;
     
     public List<String> getImages() {
         return images;
