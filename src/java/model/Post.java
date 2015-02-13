@@ -6,10 +6,13 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -32,10 +35,23 @@ public class Post implements Serializable {
     private Double pricePerMonth;
     private String requiredGender;
     private String requiredCountry;
-    private int minimumAge;
+    private int minimumAge;    
     private int maximumAge;
     private String rommieQualities;
+    private List<String> images;
+    
+    @JoinColumn(name = "userId",referencedColumnName = "id")
+    @ManyToOne
+    private User postedBy;   
+    
+    public List<String> getImages() {
+        return images;
+    }
 
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+    
     public int getTotalRooms() {
         return totalRooms;
     }
@@ -138,6 +154,14 @@ public class Post implements Serializable {
 
     public void setRommieQualities(String rommieQualities) {
         this.rommieQualities = rommieQualities;
+    }
+    
+    public User getPostedBy() {
+        return postedBy;
+    }
+
+    public void setPostedBy(User postedBy) {
+        this.postedBy = postedBy;
     }
     
 

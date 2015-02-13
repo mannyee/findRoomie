@@ -2,10 +2,14 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,8 +19,9 @@ import javax.persistence.TemporalType;
  * @author xtrememe
  */
 @Entity
-@Table(name="User_Info")
+@Table(name = "User_Info")
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +36,18 @@ public class User implements Serializable {
     private Date registeredDate;
     private String dType;
     private String role;
+
+    @OneToMany(mappedBy = "postedBy",cascade = CascadeType.PERSIST)
+    private List<Post> userPosts;
+    /*Post*/
+
+    public List<Post> getUserPosts() {
+        return userPosts;
+    }
+
+    public void setUserPosts(List<Post> userPosts) {
+        this.userPosts = userPosts;
+    }
 
     public String getdType() {
         return dType;
@@ -147,5 +164,5 @@ public class User implements Serializable {
     public String toString() {
         return "model.User[ id=" + id + " ]";
     }
-    
+
 }

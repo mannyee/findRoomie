@@ -6,10 +6,14 @@
 package controller;
 
 import ejb.PostFacade;
+import ejb.UserFacade;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import model.Post;
+import model.User;
 
 /**
  *
@@ -20,8 +24,13 @@ import model.Post;
 public class PostController {
     
     @EJB
-    private PostFacade postFacade;
+    private PostFacade postFacade;    
+    @EJB
+    private UserFacade userFacade;
+    private ExternalContext ec;
     
+    
+  
     private Post myPost;
     
 
@@ -29,7 +38,8 @@ public class PostController {
      * Creates a new instance of PostController
      */
     public PostController() {
-        this.myPost = new Post();        
+        this.myPost = new Post();  
+        ec = FacesContext.getCurrentInstance().getExternalContext();
     }
     
     public Post getPost(){
@@ -37,8 +47,13 @@ public class PostController {
     }
     
     public String postThisPost(){
+        String email = ec.getRemoteUser();        
+        System.out.println("email: " + email);        
+        User user = userFacade.findByEmail(email);
+        
+        myPost.setPostedBy(user);
         this.postFacade.create(myPost);
         System.out.println("okhere");
-        return "dashboard";
+        return "dashboard?faces-redirect=true";
     }    
 }
