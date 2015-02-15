@@ -5,8 +5,10 @@
  */
 package controller;
 
-import ejb.PostFacade;
 import ejb.UserFacade;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -21,43 +23,34 @@ import model.User;
  */
 @ManagedBean
 @RequestScoped
-public class PostController {
-    
-    @EJB
-    private PostFacade postFacade;    
-    @EJB
+public class ListMyRoomController {
+        @EJB
     private UserFacade userFacade;
     private ExternalContext ec;
-    
-    
-  
-    private Post myPost;
-    
 
     /**
-     * Creates a new instance of PostController
+     * Creates a new instance of ListMyRoomController
      */
-    public PostController() {
-        this.myPost = new Post();  
+    List<Post> posts;
+    public ListMyRoomController() {
+        posts=new ArrayList<>();
         ec = FacesContext.getCurrentInstance().getExternalContext();
     }
     
-    public Post getPost(){
-        return myPost;
-    }
-    
-    public String postThisPost(){
-        String email = ec.getRemoteUser();        
+    public String viewAll(){
+     String email = ec.getRemoteUser();        
         System.out.println("email: " + email);        
         User user = userFacade.findByEmail(email);
-        
-        myPost.setPostedBy(user);
-        this.postFacade.create(myPost);
-        System.out.println("okhere");
-        return "listmyrooms?faces-redirect=true";
-    }    
-    
-    public String makePost(){
-        return "addNewPost";
+        posts.addAll(user.getUserPosts());
+        return "listMyRooms";
     }
+    
+   public List<Post> getPosts(){       
+       return posts;
+    }
+   
+   public String removeThisPost(Post myPost){
+       posts.remove(myPost);
+       return "listMyRooms";
+   }
 }
