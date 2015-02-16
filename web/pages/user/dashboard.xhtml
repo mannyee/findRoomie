@@ -169,28 +169,33 @@
                                             </li>
                                             <li>
                                                 <h:commandLink class="delete btn btn-info btn-sm active" 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
                                                                action="#{loginController.logout()}"
 =======
                                                                action="#{signupController.editProfile()}"
 >>>>>>> 7b513380e0c19b75c373db7153ad48ee3c4fd6fd
+=======
+                                                               action="#{loginController.updateProfile}"
+>>>>>>> Stashed changes
                                                                value="My Profile"/>
                                             </li>
                                             <li>
                                                 <h:commandLink class="delete btn btn-info btn-sm active" 
-                                                               action="#{loginController.logout()}"
+                                                               action="#{postController.showPosts}"
                                                                value="Manage My Rooms"/>
                                             </li>
                                             <li>
-                                                <h:commandLink class="delete btn btn-info btn-sm active" 
-                                                               action="#{loginController.logout()}"
-                                                               value="Post New Room"/>
+                                                <h:link class="delete btn btn-info btn-sm active" 
+                                                        outcome="/faces/pages/user/addNewPost.xhtml" 
+                                                        value="Post New Room" />
                                             </li>
                                             <li>
                                                 <h:commandLink class="delete btn btn-info btn-sm active" 
                                                                action="#{loginController.logout()}"
                                                                value="Logout"/>
                                             </li>
+<<<<<<< Updated upstream
 <<<<<<< HEAD
                                             <li>
                                                 <h:commandLink class="delete btn btn-info btn-sm active" 
@@ -199,6 +204,8 @@
                                             </li>
 =======
 >>>>>>> 7b513380e0c19b75c373db7153ad48ee3c4fd6fd
+=======
+>>>>>>> Stashed changes
                                         </ul>
                                     </div>
 
@@ -208,22 +215,22 @@
                             <div class="row">
 
                                 <div style="border-right: 1px solid #DADADA; text-align: center;" class="col-sm-3 col-xs-6">
-                                    <h3 style="text-align: center;">Total credits</h3>
+                                    <h3 style="text-align: center;">Total Comments: 1</h3>
                                     <p></p>
                                 </div>
 
                                 <div style="border-right: 1px solid #DADADA; text-align: center;" class="col-sm-3 col-xs-6">
-                                    <h3 style="text-align: center;">Sites published</h3>
+                                    <h3 style="text-align: center;">Posts published: 2</h3>
                                     <p></p>
                                 </div>
 
                                 <div style="border-right: 1px solid #DADADA; text-align: center;" class="col-sm-3 col-xs-6">
-                                    <h3 style="text-align: center;">Views this month</h3>
+                                    <h3 style="text-align: center;">Views this month: 150</h3>
                                     <p></p>
                                 </div>
 
                                 <div style="text-align: center;" class="col-sm-3 col-xs-6">
-                                    <h3 style="text-align: center;">Total Sites views</h3>
+                                    <h3 style="text-align: center;">Total Post views: 1000</h3>
                                     <p></p>
                                 </div>
 

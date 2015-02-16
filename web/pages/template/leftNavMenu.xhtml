@@ -23,11 +23,11 @@
 
                 <li>
                     <h:link class="link_men" value="Dashboard"
-                            outcome="/faces/pages/user/dashboard.xhtml" />
+                            outcome="/pages/user/dashboard.xhtml" />
                 </li>
                 <li>
                     <h:link class="link_men" value="Search Rooms"
-                            outcome="/faces/pages/user/searchRooms.xhtml" />
+                            outcome="/pages/user/searchRooms.xhtml" />
                 </li>
                 <li>
                     <h:commandLink class="link_men" value="My Profile"
@@ -36,11 +36,11 @@
 
                 <li>
                     <h:commandLink class="link_men" value="Manage My Rooms"
-                                   action="#{loginController.dashboard}" />
+                                   action="#{postController.showPosts}" />
                 </li>
 
                 <li>
-                    <h:link class="link_men" outcome="/faces/pages/user/addNewPost.xhtml" 
+                    <h:link class="link_men" outcome="/pages/user/addNewPost.xhtml" 
                             value="Post New Room" />
                 </li>
 

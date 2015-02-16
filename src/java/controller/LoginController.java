@@ -31,7 +31,6 @@ public class LoginController extends BaseController{
     private User user;
     private String email;
     private List<Post> allPosts;
-    private String comment;
 
     
     public String getEmail() {
@@ -69,6 +68,12 @@ public class LoginController extends BaseController{
         user = userFacade.findByEmail(email);
         
         return user.getFirstName();
+    }
+    
+    
+    public String roomDetails(){
+        System.out.println("inside room details");
+        return "roomDetails?faces-redirect=true";
     }
     
     
@@ -110,54 +115,6 @@ public class LoginController extends BaseController{
 
     }
     
-    
-    public String updateProfile(){
-        return "";
-    }
-    
-    
-    public String showPosts(){
-        /**
-         * We could do 
-         * List<Post> allPosts = posts.findAll();
-         *  
-         * and then simply 
-         * 
-         * return "showPosts";
-         * 
-         * In showPosts.xhtml, we can easily have allPosts available through the loginController bean
-         * BUT this will cause the servlet to only forward the request not redirect.
-         * 
-         * And if we redirect, the bean will not be available. We will need flash scope to survive a
-         * redirect.
-         * 
-         * More: maxkatz.org/2010/07/27/learning-jsf2-using-flash-scope/
-         */
-       
-        allPosts = posts.findAll();
-        getFlash().put("posts", allPosts);
-        
-        System.out.println("inside the submit commment");
-        return "showPosts?faces-redirect=true";
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-    
-    
-    
-    public String submitComment(){
-        Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.comment);
-        
-        System.out.println("inside the submit commment");
-        
-        return "dashboard.xhtml?faces-redirect=true";
-    }
     
 }
 

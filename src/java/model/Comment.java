@@ -46,6 +46,14 @@ public class Comment implements Serializable {
         return true;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "model.Comment[ id=" + id + " ]";

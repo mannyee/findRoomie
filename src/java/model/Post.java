@@ -26,7 +26,23 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
     private int totalRooms;
     private int currentHolders;
     private String addressStreet;
@@ -46,7 +62,7 @@ public class Post implements Serializable {
     @ManyToOne
     private User postedBy;   
 
-	@OneToMany
+    @OneToMany
     @JoinTable(name="POST_COMMENTS")
     private List <Comment> comments;
     
