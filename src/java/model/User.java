@@ -37,6 +37,45 @@ public class User implements Serializable {
     private String dType;
     private String role;
 
+    private String phoneNumber;
+    private String addressLine1;
+    private String addressLine2;
+    private String age;
+
+    private String profilePic;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddressLine1() {
+        return addressLine1;
+    }
+
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
+    }
+
+    public String getAddressLine2() {
+        return addressLine2;
+    }
+
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+    
     @OneToMany(mappedBy = "postedBy",cascade = CascadeType.PERSIST)
     private List<Post> userPosts;
     /*Post*/
@@ -130,7 +169,6 @@ public class User implements Serializable {
     }
 //    @Embedded
 //    private Address address;
-    private String profilePic;
 
     public Long getId() {
         return id;
