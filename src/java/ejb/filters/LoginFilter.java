@@ -1,20 +1,26 @@
 package ejb.filters;
 
+import ejb.UserFacade;
 import java.io.IOException;
+import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author xtrememe
  */
 public class LoginFilter implements Filter{
-//    @EJB(mappedName = "user")
-//    private UserFacade user;
+    @EJB
+    private UserFacade user;
     
     @Override
     public void destroy(){}
@@ -27,9 +33,30 @@ public class LoginFilter implements Filter{
 //        while(servletRequest.getAttributeNames().hasMoreElements()){
 //            System.out.println("next element: " + servletRequest.getAttributeNames().nextElement());
 //        }
-        // find out the firstname of the user and save that into the session object
         
-                
+        /**
+         * Find out the id of the currently logged in user and save that into the session.
+         * 
+         * NOTE:
+         * we cannot get hold of a session object via FacesContext 
+         * because FacesContext object cannot be obtained outside of a context of
+         * a JSF artifact(@ManagedBean, @FacesConverter, @FacesComponent, Phaselistener etc.)
+         */
+        // get a hold of the http request
+        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        
+        // access the HttpSession associated with the request
+        HttpSession session = request.getSession(request.getSession() == null ? true : false);
+        
+        Long userId = user.findByEmail(request.getRemoteUser().toString()).getId();
+        
+        session.setAttribute("userId", userId);
+        session.setAttribute("userEmail", request.getRemoteUser().toString());
+        
+        // include the user object itself -- BUT DON'T THINK IT'S A GOOD IDEA!!!
+        session.setAttribute("userObj", user.findByEmail(request.getRemoteUser().toString()));
+        
+        
         filterChain.doFilter(servletRequest, servletResponse);
     }
     

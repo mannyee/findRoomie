@@ -1,16 +1,20 @@
 package controller;
 
+import ejb.PostFacade;
 import ejb.UserFacade;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import model.Post;
 import model.User;
 
 /**
@@ -19,19 +23,15 @@ import model.User;
  */
 @ManagedBean
 @SessionScoped
-public class LoginController {
+public class LoginController extends BaseController{
+    @EJB
+    private PostFacade posts;
     @EJB
     private UserFacade userFacade;
     private User user;
     private String email;
-    private ExternalContext ec;
+    private List<Post> allPosts;
 
-    
-    public LoginController(){
-        ec = FacesContext.getCurrentInstance().getExternalContext();
-        
-    }
-    
     
     public String getEmail() {
         return email;
@@ -54,7 +54,7 @@ public class LoginController {
     
     public String register(){
         try {
-            ec.redirect(ec.getRequestContextPath() + "/faces/pages/user/signup.xhtml");
+            getEc().redirect(getEc().getRequestContextPath() + "/faces/pages/user/signup.xhtml");
         } catch (IOException ex) {
 
         }
@@ -63,9 +63,7 @@ public class LoginController {
     }
     
     public String displayName(){
-        String email = ec.getRemoteUser();
-        
-        System.out.println("email: " + email);
+        String email = getEc().getRemoteUser();
         
         user = userFacade.findByEmail(email);
         
@@ -73,10 +71,16 @@ public class LoginController {
     }
     
     
+    public String roomDetails(){
+        System.out.println("inside room details");
+        return "roomDetails?faces-redirect=true";
+    }
+    
+    
     public String forgotPassword(){
         
         try {
-            ec.redirect(ec.getRequestContextPath() + "/faces/forgotPassword.xhtml");
+            getEc().redirect(getEc().getRequestContextPath() + "/faces/forgotPassword.xhtml");
         } catch (IOException ex) {
 
         }
@@ -112,12 +116,8 @@ public class LoginController {
     }
     
     
-    public String updateProfile(){
-        return "";
-    }
-    
-    }
+}
 
-//http://www.pramati.com/docstore/1270002/index.htm
-//    http://www.avajava.com/tutorials/lessons/how-do-i-create-a-login-module.html
-//    http://stackoverflow.com/questions/20396276/jaas-exception-null-username-and-password
+// http://www.pramati.com/docstore/1270002/index.htm
+// http://www.avajava.com/tutorials/lessons/how-do-i-create-a-login-module.html
+// http://stackoverflow.com/questions/20396276/jaas-exception-null-username-and-password
