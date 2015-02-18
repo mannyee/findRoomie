@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Search Results</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/pages/template/main_layout.xhtml">
+            <ui:define name="content">
+                <ui:repeat value="#{flash.results}" var="post">
+                    <h1>#{post.title}</h1>
+                    <div>
+                        <p>Age Group: #{post.minimumAge} to #{post.maximumAge}</p>
+                        <p>Area: #{post.addressStreet}, #{post.addressCity}, #{post.addressState}</p>
+                    </div>
+                </ui:repeat>
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

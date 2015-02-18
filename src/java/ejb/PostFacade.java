@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
 import javax.ejb.Stateless;
@@ -12,6 +13,12 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import model.Post;
 import model.User;
 
@@ -58,5 +65,46 @@ public class PostFacade extends AbstractFacade<Post> {
         }
         
         return posts;            
+    }
+    
+    
+    public List<Post> search(String city, String state){
+        List<Post> posts = new ArrayList<>();
+        
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Post> cq = cb.createQuery(Post.class);
+        Root<Post> post = cq.from(Post.class);
+        
+        cq.select(post);
+        
+        
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        if (city != null) {
+            predicates.add(cb.like(
+                    post.get("addressCity"), "%"+city+"%")
+            );
+        }
+        
+        
+        if(state != null){
+            predicates.add(cb.equal(
+                    post.get("addressState"), "%" + state + "%"));
+        }
+        
+        
+
+        cq.where(predicates.toArray(new Predicate[0]));
+        
+        
+
+        
+        
+        
+        
+        TypedQuery<Post> q = getEntityManager().createQuery(cq);
+        
+        
+        return q.getResultList();
     }
 }

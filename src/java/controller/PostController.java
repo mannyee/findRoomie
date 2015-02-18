@@ -97,9 +97,6 @@ public class PostController extends BaseController{
     
     
     public String roomDetails(){
-        System.out.println("inside room details");
-        
-        getFlash().put("post", "Roomm");
         
         return "roomDetails?faces-redirect=true";
     }
