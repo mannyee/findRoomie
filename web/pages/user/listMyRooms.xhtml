@@ -31,7 +31,7 @@
                             <div class="panel-body">
                                 <div class="clear listings">
 
-                                    <ui:repeat value="#{listMyRoomController.posts}" var="room">
+                                    <ui:repeat value="#{flash.results}" var="room">
                                         <div class="row  listing-row">
                                             <div class="col-sm-3">
 
@@ -53,12 +53,15 @@
                                                 <p class="muted">Description: #{room.roomDescription} </p>
                                                 <br/>
                                                 <p>
-                                                    <span class="classified_links pull-right">
-                                                        <a href="editPost.xhtml" class="delete btn btn-info btn-sm">Edit/View</a>&nbsp;                                
-                                                    </span>
-                                                    <span class="classified_links pull-right">
-                                                        <a href="roomDetail.html" class="delete btn btn-info btn-sm">Delete</a>&nbsp;                                
-                                                    </span>
+                                                    <h:form>    
+                                                        <span class="classified_links pull-right">
+                                                            <h:link outcome="roomDetails">
+                                                                    <input type="button" class="delete btn btn-info btn-sm"
+                                                                             value="View Details" />
+                                                                    <f:param name="postId" value="#{room.id}" />
+                                                            </h:link>&nbsp;&nbsp;
+                                                        </span>
+                                                    </h:form>
                                                     
                                                 </p>
                                             </div>

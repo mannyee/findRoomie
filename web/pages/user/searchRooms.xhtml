@@ -5,109 +5,145 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core" >
-<h:head></h:head>
-<h:body>
-    <ui:composition template="/pages/template/main_layout.xhtml">
-        <ui:define name="content">
-            
-            <div class="row">
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="/pages/template/main_layout.xhtml">
+            <ui:define name="content">
 
-                <div class="col-sm-3">
-                    <div class="sidebar-account">		
-                        <div class="row ">
-                            <div class="col-lg-12">
-                                <div class="panel panel-default">
-                                    <ui:include src="../template/leftNavMenu.xhtml" />
+                <div class="row">
+
+                    <div class="col-sm-3">
+                        <div class="sidebar-account">		
+                            <div class="row ">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <ui:include src="../template/leftNavMenu.xhtml" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </div>       
-                </div>
-                
-                <div class="col-sm-9">
-                    <form action="" method="post" class="form-vertical" enctype="multipart/form-data">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Choose category</div>
-                            <div class="panel-body">
-                                <div class="row">  
-                                    <div class="col-sm-12 ">
+                        </div>       
+                    </div>
 
-                                        <div class="form-group">
-
+                    <div class="col-sm-9">
+                        <h:form class="form-vertical">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Choose category</div>
+                                <div class="panel-body">
+                                    <div class="row">  
+                                        <div class="col-sm-12 ">
                                             <div class="row">
-                                                <div style="margin-top: 10px;" class="col-sm-2">
-                                                    <label>Category</label>
+                                                <div class="form-group" style="margin-top: 10px;"> 
+                                                    <div  class="col-sm-3">
+                                                        <label>State</label>
 
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <h:selectOneMenu value="#{searchController.selectedState}">
+                                                            <f:selectItem itemLabel="-- Select --" itemValue="#{null}" />
+                                                            <f:selectItems value="#{searchController.states}" var="state"   
+                                                                        itemValue="#{state}" itemLabel="#{state.label}" />
+                                                        </h:selectOneMenu>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <select  name="cms_id" class="form-control " id="category">
-                                                        <option value="" >Choose a category</option>
+                                                <div class="clear"></div>
+                                                <div class="form-group" style="margin-top: 10px;">
+                                                    <div  class="col-sm-3">
+                                                        <label>City</label>
 
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <h:inputText class="form-control" value="#{searchController.selectedCity}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="form-group" style="margin-top: 10px;">
+                                                    <div  class="col-sm-3">
+                                                        <label>Price Per Month</label>
 
-                                                    </select>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <h:inputText class="form-control" style="width:200px;" value="#{searchController.price}" />
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="form-group" style="margin-top: 10px;">
+                                                    <div  class="col-sm-3">
+                                                        <label>No of Rooms</label>
+
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <h:inputText style="width:100px;" class="form-control" value="#{searchController.noOfRooms}"/>
+
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="form-group" style="margin-top: 10px;">
+                                                    <div  class="col-sm-3">
+                                                        <label>Gender</label>
+
+                                                    </div>
+
+                                                    <div class="col-sm-5">
+                                                        <h:selectOneMenu class="form-control" value="#{searchController.gender}">
+                                                            <f:selectItem itemValue="male" itemLabel="Male" />
+                                                            <f:selectItem itemValue="female" itemLabel="Female" />
+                                                            <f:selectItem itemValue="any" itemLabel="Any" />
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="col-sm-5" style="margin-top:10px;">
+                                                    <h:commandButton class="btn btn-primary pull-right" action="#{searchController.listRooms}"  value="Search"/>
                                                 </div>
 
                                             </div>
-                                        </div>			
-                                    </div>			
-                                </div>			
-                            </div>			
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Website details</div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="row">
-
-                                        <div class="col-sm-12">
-                                            <label>Title </label>
-                                            <input value="" name="content_title"  type="text" class="form-control "/>
-                                             </div>
-                                        <br/><br/>
-                                        <div class="col-sm-12">
-                                            <label>Url </label>
-                                            <input value="" name="site_url"  type="url" class="form-control "/>
-                                           </div>
-                                        	
-
+                                        </div>	
                                     </div>
-
-                                </div>
-
-
-
-
-                            </div>			
-                        </div>
-                        
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Complete ad</div>
-                            <div class="panel-body">
-
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"  value="Y"/> I agree to the terms and conditions and regulations.
-                                    </label>
-                                </div>
-
-                                <br/>
-                                <button class="btn btn-primary pull-right" type="submit" value="submit" name="submit"><i class="icon-ok"></i>Publish Post</button>
-
+                                    <div class="clear listings">
+                                        <ui:repeat value="#{searchController.allPosts}" var="post">
+                                            <div class="row listing-row">
+                                                <div class="col-sm-3">
+                                                    <a class="thumbnail " href="#" title="test">
+                                                        <img alt="test1" title="test1" height="220" width="276" src="/faces/resources/images/no_preview.jpg"/>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <h3>
+                                                        <h:link value="#{post.addressState}" outcome="/faces/pages/user/viewDetail.xhtml">
+                                                            <f:param name="id" value="#{post.addressState}" />
+                                                        </h:link>&nbsp;
+                                                        <span style="font-size: 12px;">price (#{post.addressState})</span>
+                                                    </h3>
+                                                    <p class="muted">No of Rooms <strong>#{post.addressState}</strong></p>
+                                                    <p class="muted">Posted By: #{post.addressState} </p>
+                                                    <p class="muted">Location : #{post.addressState}</p>
+                                                    <p>
+                                                        <span class="classified_links pull-right">
+                                                            <h:link value="#{post.addressState}" class="delete btn btn-info btn-sm">View Details</h:link>&nbsp;
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ui:repeat>
+                                        <!--<br/><br/><div class="row">
+                                        <div class="col-sm-12">
+                                        <div class="alert alert-info">
+                                        <p style="color:red">No Websites Found !!</p>
+                                        </div>
+                                        </div>
+                                        </div>';
+                                        -->
+                                    </div>
+                                </div>			
                             </div>
 
+                        </h:form>
+                    </div>
 
-
-
-                        </div>
-
-                    </form>
                 </div>
+            </ui:define>
+        </ui:composition>
 
-            </div>
-                 
-        </ui:define>
-    </ui:composition>
-    
-</h:body>
+    </h:body>
 </html>

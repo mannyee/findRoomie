@@ -16,7 +16,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import model.Post;
@@ -67,8 +66,9 @@ public class PostFacade extends AbstractFacade<Post> {
 
         return posts;
     }
-
-    public List<Post> search(String city, String state) {
+ 
+    
+    public List<Post> search(String city, String state, String gender, Double price, Integer numberOfRooms){
         List<Post> posts = new ArrayList<>();
 
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
@@ -81,13 +81,29 @@ public class PostFacade extends AbstractFacade<Post> {
 
         if (city != null) {
             predicates.add(cb.like(
-                    post.get("addressCity"), "%" + city + "%")
+                    cb.upper(post.get("addressCity")), "%"+city.toUpperCase()+"%")
             );
         }
 
         if (state != null) {
             predicates.add(cb.equal(
-                    post.get("addressState"), "%" + state + "%"));
+                    cb.upper(post.get("addressState")), "%" + state.toUpperCase() + "%"));
+        }
+        
+        if(gender != null){
+            predicates.add(cb.equal(post.get("requiredGender"), gender));
+        }
+        
+        System.out.println("price: " + price);
+        
+        if(price != null){
+            System.out.println("price: " + price);
+            predicates.add(cb.equal(post.get("pricePerMonth"), price));
+        }
+        
+        
+        if(numberOfRooms != null){
+            predicates.add(cb.equal(post.get("totalRooms"), numberOfRooms));
         }
 
         cq.where(predicates.toArray(new Predicate[0]));

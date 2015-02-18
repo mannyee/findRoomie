@@ -19,6 +19,9 @@ public class SearchController extends BaseController{
     private PostFacade postFacade;
     private String selectedState;
     private String selectedCity;
+    private Double price;
+    private Integer noOfRooms;
+    private String gender;
     private List<Post> allPosts;
 
     
@@ -29,6 +32,30 @@ public class SearchController extends BaseController{
         
     }
     
+    
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getNoOfRooms() {
+        return noOfRooms;
+    }
+
+    public void setNoOfRooms(Integer noOfRooms) {
+        this.noOfRooms = noOfRooms;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
     
     public String getSelectedState() {
         return selectedState;
@@ -56,13 +83,54 @@ public class SearchController extends BaseController{
         return allPosts;
     }
     
+    public String listRooms(){
+//        System.out.println("selectedCity: " + selectedCity);
+//        System.out.println("selectedState: " + selectedState);
+        //selectedCity = selectedCity.equals("") ? null : selectedCity;
+       // gender = (gender != null && gender.equalsIgnoreCase("any")) ? null : gender;
+        
+        System.out.println("price: " + getPrice());
+        
+        getFlash().put("results", postFacade.search(selectedCity, selectedState, gender, price, noOfRooms));
+        
+        int size = postFacade.search(selectedCity, selectedState, gender, price, noOfRooms).size();
+        
+        System.out.println("size: " + size);
+        
+        return "listMyRooms?faces-redirect=true";
+    }
+    
+    
     public String search(){
         System.out.println("selectedCity: " + selectedCity);
-        System.out.println("size: " +  postFacade.search(selectedCity, selectedState).size());
+        System.out.println("selectedState: " + selectedState);
+        selectedCity = "".equals(selectedCity) ? null : selectedCity;
         
-        getFlash().put("results", postFacade.search(selectedCity, selectedState));
+        
+        getFlash().put("results", postFacade.search(selectedCity, selectedState, null, null, null));
         
         return "searchResults?faces-redirect=true";
     }
+    
+    
+//    public void preRenderView(String postId){
+//        System.out.println("postId: " + postId);
+//        
+//        Post post = postFacade.find(Long.parseLong(postId));
+//        
+//        System.out.println("post.title: " + post.getTitle());
+//        
+//        getFlash().put("post", post);
+//        //setPost(post);
+//        
+//    
+//    }
+    
+    
+    public String roomDetails(){
+        
+        return "roomDetails?faces-redirect=true";
+    }
+    
     
 }
