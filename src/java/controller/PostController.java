@@ -10,10 +10,9 @@ import ejb.UserFacade;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpSession;
 import model.Comment;
 import model.Post;
@@ -24,7 +23,7 @@ import model.User;
  * @author Ashok Subedi
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class PostController extends BaseController{
     
     @EJB
@@ -36,17 +35,6 @@ public class PostController extends BaseController{
     private Comment comment;
         
     
-    @PostConstruct
-    public void setPosts(){
-        System.out.println("post construct method called");
-         HttpSession session = (HttpSession)getEc().getSession(false);
-        
-        allPosts = postFacade.findAllByUser((User)session.getAttribute("userObj"));
-        getFlash().put("posts", allPosts);
-    }
-
-    
-
     /**
      * Creates a new instance of PostController
      */
@@ -58,6 +46,10 @@ public class PostController extends BaseController{
     
     public Post getPost(){
         return myPost;
+    }
+    
+    public void setPost(Post p){
+        this.myPost = p;
     }
     
     public String postThisPost(){
@@ -72,10 +64,6 @@ public class PostController extends BaseController{
     
     
         
-    public String updateProfile(){
-        return "";
-    }
-    
     
     public String showPosts(){
         /**
@@ -102,14 +90,17 @@ public class PostController extends BaseController{
         return "showPosts?faces-redirect=true";
     }
 
-    public void helloWorld(){
-        System.out.println("hello world!!");
-    }
+    
     
     public String roomDetails(){
         System.out.println("inside room details");
+        
+        getFlash().put("post", "Roomm");
+        
         return "roomDetails?faces-redirect=true";
     }
+    
+    
     
     public Comment getComment() {
         return comment;
@@ -118,6 +109,14 @@ public class PostController extends BaseController{
     
     public void preRenderView(String postId){
         System.out.println("postId: " + postId);
+        
+        Post post = postFacade.find(Long.parseLong(postId));
+        
+        System.out.println("post.title: " + post.getTitle());
+        
+        getFlash().put("post", post);
+        setPost(post);
+        
     
     }
     

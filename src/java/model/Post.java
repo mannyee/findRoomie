@@ -27,6 +27,20 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
+    private int totalRooms;
+    private int currentHolders;
+    private String addressStreet;
+    private String addressCity;
+    private String addressState;
+    private String roomDescription;
+    private int expectedRoomieNumber;
+    private Double pricePerMonth;
+    private String requiredGender;
+    private String requiredCountry;
+    private int minimumAge;
+    private int maximumAge;
+    private String rommieQualities;
+    private List<String> images;
 
     public String getTitle() {
         return title;
@@ -43,20 +57,7 @@ public class Post implements Serializable {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-    private int totalRooms;
-    private int currentHolders;
-    private String addressStreet;
-    private String addressCity;
-    private String addressState;
-    private String roomDescription;
-    private int expectedRoomieNumber;
-    private Double pricePerMonth;
-    private String requiredGender;
-    private String requiredCountry;
-    private int minimumAge;
-    private int maximumAge;
-    private String rommieQualities;
-    private List<String> images;
+    
     
     @JoinColumn(name = "userId",referencedColumnName = "id")
     @ManyToOne
