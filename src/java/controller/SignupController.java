@@ -149,6 +149,9 @@ public class SignupController implements Serializable {
             FacesMessage facesMessage = new FacesMessage("Registration Done Successfully");
             facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+
+            return "login?faces-redirect=true";
+
         } else {
             //this user already exists so they can not register again
             FacesMessage facesMessage = new FacesMessage("Registration Failed - user already exists");
@@ -338,7 +341,7 @@ public class SignupController implements Serializable {
         extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         File newfile = new File(path + File.separator + "resources"
-                + File.separator + "profile_pic" + File.separator + id+"."+extension);
+                + File.separator + "profile_pic" + File.separator + id + "." + extension);
 
         if (oldfile.renameTo(newfile)) {
             System.out.println("Rename succesful");

@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import model.Post;
 import model.User;
 
 /**
@@ -81,6 +82,57 @@ public class UserFacade extends AbstractFacade<User> {
         query.setParameter("gender", gender);
         query.setParameter("age", age);
         query.setParameter("profilePic", profilePic);
+
+        return query.executeUpdate();
+    }
+    
+    
+    
+     //update post
+    public int updatePost(Long post_id, String title, int totalRooms, int currentHolders,
+            String addressStreet, String addressCity, String addressState,
+            String roomDescription,
+            int expectedRoomieNumber, double pricePerMonth,
+            String requiredGender, String requiredCountry, int minimumAge,
+            int maximumAge, String rommieQualities, List<String> images) {
+
+//        String imagesPath = "";
+//        for (String img : images) {
+//            imagesPath += img + ";";
+//        }
+
+        String jpql = "UPDATE Post SET title= :title, "
+                + "totalRooms= :totalRooms , currentHolders= :currentHolders"
+                + " ,addressStreet = :addressStreet, "
+                + "addressCity=:addressCity, addressState=:addressState, "
+                + "roomDescription=:roomDescription, expectedRoomieNumber=:expectedRoomieNumber,"
+                + " pricePerMonth=:pricePerMonth,"
+                + "requiredGender=:requiredGender,"
+                + "requiredCountry=:requiredCountry,"
+                + "minimumAge=:minimumAge,"
+                + "maximumAge=:maximumAge,"
+                + "images=:images,"
+                + "rommieQualities=:rommieQualities"
+                + " WHERE id = :post_id";
+
+        Query query = em.createQuery(jpql, Post.class);
+
+        query.setParameter("post_id", post_id);
+        query.setParameter("title", title);
+        query.setParameter("totalRooms", totalRooms);
+        query.setParameter("currentHolders", currentHolders);
+        query.setParameter("addressStreet", addressStreet);
+        query.setParameter("addressCity", addressCity);
+        query.setParameter("addressState", addressState);
+        query.setParameter("roomDescription", roomDescription);
+        query.setParameter("expectedRoomieNumber", expectedRoomieNumber);
+        query.setParameter("pricePerMonth", pricePerMonth);
+        query.setParameter("requiredGender", requiredGender);
+        query.setParameter("requiredCountry", requiredCountry);
+        query.setParameter("minimumAge", minimumAge);
+        query.setParameter("maximumAge", maximumAge);
+        query.setParameter("rommieQualities", rommieQualities);
+        query.setParameter("images", images);
 
         return query.executeUpdate();
     }

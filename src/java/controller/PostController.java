@@ -7,13 +7,25 @@ package controller;
 
 import ejb.PostFacade;
 import ejb.UserFacade;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import model.Comment;
 import model.Post;
 import model.User;
@@ -33,7 +45,8 @@ public class PostController extends BaseController{
     private List<Post> allPosts;
     private Post myPost;
     private Comment comment;
-        
+    
+    private String extension;
     
     /**
      * Creates a new instance of PostController
@@ -131,5 +144,178 @@ public class PostController extends BaseController{
         
         return "dashboard.xhtml?faces-redirect=true";
     }
+    
+     //to update user profile
+    public String updatePostInfo() throws IOException {
+
+        String st = upload();
+
+        if (st.equalsIgnoreCase("success")) {
+
+            String fileName = File.separator + "faces" + File.separator + "resources"
+                    + File.separator + "room_pics" + File.separator + myPost.getId() + "." + extension;
+
+            List<String> img = new ArrayList<>();
+            img.add(fileName);
+
+            userFacade.updatePost(myPost.getId(), myPost.getTitle(),
+                    myPost.getTotalRooms(),
+                    myPost.getCurrentHolders(),
+                    myPost.getAddressStreet(), myPost.getAddressCity(),
+                    myPost.getAddressState(),
+                    myPost.getRoomDescription(),
+                    myPost.getExpectedRoomieNumber(), myPost.getPricePerMonth(),
+                    myPost.getRequiredGender(), myPost.getRequiredCountry(),
+                    myPost.getMinimumAge(),
+                    myPost.getMaximumAge(), myPost.getRommieQualities(),
+                    img);
+
+            FacesMessage facesMessage = new FacesMessage("Updated Post Successfully");
+            facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+
+            return "dashboard?faces-redirect=true";
+
+//            System.out.println(myPost.getId()+"\t"+ myPost.getTitle()+"\t"+ 
+//                    myPost.getTotalRooms()+"\t"+
+//                    myPost.getCurrentHolders()+"\t"+
+//                    myPost.getAddressStreet()+"\t"+ myPost.getAddressCity()+"\t"+
+//                    myPost.getAddressState()+"\t"+
+//                    myPost.getRoomDescription()+"\t"+
+//                    myPost.getExpectedRoomieNumber()+"\t"+ myPost.getPricePerMonth()+"\t"+
+//                    myPost.getRequiredGender()+"\t"+ myPost.getRequiredCountry()+"\t"+
+//                    myPost.getMinimumAge()+"\t"+
+//                    myPost.getMaximumAge()+"\t"+ myPost.getRommieQualities()+"\t"+
+//                    myPost.getImages());
+        } else {
+            return null;
+        }
+
+    }
+
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String upload() throws IOException {
+
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        FacesContext context = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) context
+                .getExternalContext().getContext();
+        String path = servletContext.getRealPath("");
+        boolean file1Success = false;
+
+        String fileName = "";
+
+        Part file1 = getFile1();
+        
+
+        if (file1.getSize() > 0) {
+            fileName = getFileNameFromPart(file1);
+            /**
+             * destination where the file will be uploaded
+             */
+            File outputFile = new File(path + File.separator + "resources"
+                    + File.separator + "room_pics" + File.separator + fileName);
+            inputStream = file1.getInputStream();
+            outputStream = new FileOutputStream(outputFile);
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int bytesRead = 0;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            file1Success = true;
+        }
+
+        if (file1Success) {
+            System.out.println("File uploaded to : " + path);
+            /**
+             * set the success message when the file upload is successful
+             */
+            setMessage("File successfully uploaded to " + path);
+        } else {
+            /**
+             * set the error message when error occurs during the file upload
+             */
+            setMessage("Error, select atleast one file!");
+        }
+
+        File oldfile = new File(path + File.separator + "resources"
+                + File.separator + "room_pics" + File.separator + fileName);
+
+        extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+        File newfile = new File(path + File.separator + "resources"
+                + File.separator + "room_pics" + File.separator + myPost.getId() + "." + extension);
+
+        if (oldfile.renameTo(newfile)) {
+            System.out.println("Rename succesful");
+            return "success";
+
+        } else {
+            System.out.println("Rename failed");
+
+            return "fail";
+        }
+
+    }
+
+    public static String getFileNameFromPart(Part part) {
+        final String partHeader = part.getHeader("content-disposition");
+        for (String content : partHeader.split(";")) {
+            if (content.trim().startsWith("filename")) {
+                String fileName = content.substring(content.indexOf('=') + 1)
+                        .trim().replace("\"", "");
+                return fileName;
+            }
+        }
+        return null;
+    }
+
+    public static final int BUFFER_SIZE = 3000000;
+
+    public void validateFile(FacesContext con, UIComponent comp, Object value) {
+        Part p = (Part) value;
+        List<FacesMessage> list = new ArrayList<>();
+        if (p.getSize() == 0) {
+            list.add(new FacesMessage("File Size too small"));
+        }
+        if (p.getSize() > BUFFER_SIZE) {
+            list.add(new FacesMessage("File Size too Big"));
+        }
+
+        if (!("image/png".equals(p.getContentType()) || "image/jpeg".equals(p.getContentType()))) {
+            list.add(new FacesMessage("not an image file"));
+        }
+
+        if (!list.isEmpty()) {
+            throw new ValidatorException(list);
+        }
+    }
+    
+    private Part file1;
+
+    public Part getFile1() {
+        return file1;
+    }
+
+    public void setFile1(Part file1) {
+        this.file1 = file1;
+    }
+
     
 }
