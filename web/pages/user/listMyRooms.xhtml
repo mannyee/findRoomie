@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" >
+    <h:head></h:head>
+    <h:body>
+        <ui:composition template="/pages/template/main_layout.xhtml">
+            <ui:define name="content">
+
+                <div class="row">
+
+                    <div class="col-sm-3">
+                        <div class="sidebar-account">		
+                            <div class="row ">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <ui:include src="../template/leftNavMenu.xhtml" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>       
+                    </div>
+
+                    <div class="col-sm-9">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Posts</div>
+                            <div class="panel-body">
+                                <div class="clear listings">
+
+                                    <ui:repeat value="#{listMyRoomController.posts}" var="room">
+                                        <div class="row  listing-row">
+                                            <div class="col-sm-3">
+
+                                                <a class="thumbnail " href="#" title="test">
+                                                    <img  alt="test1" title="test1" height="220" width="276" src="assets/images/no_preview.jpg"/>
+
+                                                </a>
+                                            </div>
+
+                                            <div class="col-sm-8">
+                                                <h3>
+                                                    <a href="#" class="">
+                                                        test1
+                                                    </a>&nbsp;
+                                                    <span style="font-size: 12px;">Price per month (#{room.pricePerMonth})</span>
+                                                </h3>
+                                                <p class="muted">No of Rooms <strong>2</strong></p>
+                                                <p class="muted">Posted By: Ram </p>
+                                                <p class="muted">Location : Fairfield, Iowa</p>
+                                                <p>
+                                                    <span class="classified_links pull-right">
+                                                        <a href="roomDetail.html" class="delete btn btn-info btn-sm">Edit/View</a>&nbsp;                                
+                                                    </span>
+                                                    <span class="classified_links pull-right">
+                                                        <a href="roomDetail.html" class="delete btn btn-info btn-sm">Delete</a>&nbsp;                                
+                                                    </span>
+                                                    
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+
+                </div>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
