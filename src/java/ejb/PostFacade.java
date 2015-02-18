@@ -119,7 +119,7 @@ public class PostFacade extends AbstractFacade<Post> {
             String roomDescription,
             int expectedRoomieNumber, double pricePerMonth,
             String requiredGender, String requiredCountry, int minimumAge,
-            int maximumAge, String rommieQualities, String images) {
+            int maximumAge, String rommieQualities, String images, String postStatus) {
 
         String jpql = "UPDATE Post SET title= :title, "
                 + "totalRooms= :totalRooms , currentHolders= :currentHolders"
@@ -132,7 +132,8 @@ public class PostFacade extends AbstractFacade<Post> {
                 + "minimumAge=:minimumAge,"
                 + "maximumAge=:maximumAge,"
                 + "images=:images,"
-                + "rommieQualities=:rommieQualities"
+                + "rommieQualities=:rommieQualities,"
+                + "postStatus= :postStatus "
                 + " WHERE id = :post_id";
 
         Query query = em.createQuery(jpql, Post.class);
@@ -153,6 +154,8 @@ public class PostFacade extends AbstractFacade<Post> {
         query.setParameter("maximumAge", maximumAge);
         query.setParameter("rommieQualities", rommieQualities);
         query.setParameter("images", images);
+
+        query.setParameter("postStatus", postStatus);
 
         return query.executeUpdate();
     }

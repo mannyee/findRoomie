@@ -79,6 +79,7 @@ public class PostController extends BaseController {
 
         myPost.setImages(fileName);
         myPost.setPostedBy(user);
+        myPost.setPostStatus("open");
         this.postFacade.create(myPost);
         System.out.println("okhere");
 //        return "listmyrooms?faces-redirect=true";
@@ -167,7 +168,7 @@ public class PostController extends BaseController {
                     myPost.getRequiredGender(), myPost.getRequiredCountry(),
                     myPost.getMinimumAge(),
                     myPost.getMaximumAge(), myPost.getRommieQualities(),
-                    fileName);
+                    fileName,myPost.getPostStatus());
 
             FacesMessage facesMessage = new FacesMessage("Updated Post Successfully");
             facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);

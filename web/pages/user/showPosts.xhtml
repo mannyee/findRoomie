@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
@@ -32,49 +32,53 @@
                             <div class="panel-body">
                                 <div class="clear listings">
                                     <ui:repeat var="post" value="#{flash.posts}">
-                                            <div class="row  listing-row">
-                                                <div class="col-sm-3">
-                                                    <a class="thumbnail " href="#" title="test">
-                                                            <img  alt="test1" title="test1" height="220" width="276" src="assets/images/no_preview.jpg"/>
+                                        <div class="row  listing-row">
+                                            <div class="col-sm-3">
+                                                <a class="thumbnail " href="#" title="test">
+                                                    <!--                                                    <img  alt="test1" title="test1" height="220" width="276" src="assets/images/no_preview.jpg"/>-->
+                                                    <h:graphicImage width="276" height="220"  
+                                                                    title="profile picture" alt="profile picture"  
+                                                                    url="#{post.images}"
 
-                                                    </a>
-                                                </div>
+                                                                    />
+                                                </a>
+                                            </div>
 
-                                                <div class="col-sm-8">
-                                                    <h3>
-                                                        <a href="#" class="">
-                                                            #{post.title}
-                                                        </a>&nbsp;
-                                                        <span style="font-size: 12px;">Monthly Price: #{post.pricePerMonth}</span>
-                                                    </h3>
-                                                    <p class="muted">No of Rooms <strong>#{post.totalRooms}</strong></p>
-                                                    <p class="muted">Location : #{post.addressCity}, #{post.addressState}</p>
-                                                    <p>
-                                                        <h:form>
-                                                            <span class="classified_links pull-right">
-                                                                <h:link outcome="editPost">
-                                                                    <input type="button" class="delete btn btn-info btn-sm"
-                                                                             value="Edit Post" />
-                                                                    <f:param name="postId" value="#{post.id}" />
-                                                                </h:link>&nbsp;&nbsp;
-                                                            </span>
-                                                        </h:form>
-                                                        
-                                                        <h:form>    
+                                            <div class="col-sm-8">
+                                                <h3>
+                                                    <a href="#" class="">
+                                                        #{post.title}
+                                                    </a>&nbsp;
+                                                    <span style="font-size: 12px;">Monthly Price: #{post.pricePerMonth}</span>
+                                                </h3>
+                                                <p class="muted">No of Rooms <strong>#{post.totalRooms}</strong></p>
+                                                <p class="muted">Location : #{post.addressCity}, #{post.addressState}</p>
+                                                <p>
+                                                    <h:form>
                                                         <span class="classified_links pull-right">
-                                                            <h:link outcome="roomDetails">
-                                                                    <input type="button" class="delete btn btn-info btn-sm"
-                                                                             value="View Details" />
-                                                                    <f:param name="postId" value="#{post.id}" />
+                                                            <h:link outcome="editPost">
+                                                                <input type="button" class="delete btn btn-info btn-sm"
+                                                                       value="Edit Post" />
+                                                                <f:param name="postId" value="#{post.id}" />
                                                             </h:link>&nbsp;&nbsp;
                                                         </span>
-                                                        </h:form>
+                                                    </h:form>
+
+                                                    <h:form>    
+                                                        <span class="classified_links pull-right">
+                                                            <h:link outcome="roomDetails">
+                                                                <input type="button" class="delete btn btn-info btn-sm"
+                                                                       value="View Details" />
+                                                                <f:param name="postId" value="#{post.id}" />
+                                                            </h:link>&nbsp;&nbsp;
+                                                        </span>
+                                                    </h:form>
 
 
-                                                    </p>
-                                                </div>
+                                                </p>
                                             </div>
-                                        </ui:repeat>
+                                        </div>
+                                    </ui:repeat>
                                 </div>
                             </div>
                         </div>

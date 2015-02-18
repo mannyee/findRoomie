@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Post implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +42,15 @@ public class Post implements Serializable {
     private int maximumAge;
     private String rommieQualities;
     private String images;
+    private String postStatus;
+
+    public String getPostStatus() {
+        return postStatus;
+    }
+
+    public void setPostStatus(String postStatus) {
+        this.postStatus = postStatus;
+    }
 
     public String getTitle() {
         return title;
@@ -57,16 +67,15 @@ public class Post implements Serializable {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-    
-    
-    @JoinColumn(name = "userId",referencedColumnName = "id")
+
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     @ManyToOne
-    private User postedBy;   
+    private User postedBy;
 
     @OneToMany
-    @JoinTable(name="POST_COMMENTS")
-    private List <Comment> comments;
-    
+    @JoinTable(name = "POST_COMMENTS")
+    private List<Comment> comments;
+
     public String getImages() {
         return images;
     }
@@ -74,7 +83,7 @@ public class Post implements Serializable {
     public void setImages(String images) {
         this.images = images;
     }
-    
+
     public int getTotalRooms() {
         return totalRooms;
     }
@@ -178,7 +187,7 @@ public class Post implements Serializable {
     public void setRommieQualities(String rommieQualities) {
         this.rommieQualities = rommieQualities;
     }
-    
+
     public User getPostedBy() {
         return postedBy;
     }
@@ -186,7 +195,6 @@ public class Post implements Serializable {
     public void setPostedBy(User postedBy) {
         this.postedBy = postedBy;
     }
-    
 
     public Long getId() {
         return id;
@@ -220,5 +228,5 @@ public class Post implements Serializable {
     public String toString() {
         return "model.Post[ id=" + id + " ]";
     }
-    
+
 }
