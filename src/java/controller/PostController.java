@@ -58,21 +58,16 @@ public class PostController extends BaseController{
         
         myPost.setPostedBy(user);
         this.postFacade.create(myPost);
-<<<<<<< HEAD
         System.out.println("okhere");
-        return "listmyrooms?faces-redirect=true";
-    }    
+//        return "listmyrooms?faces-redirect=true";
+        return "dashboard?faces-redirect=true";
+    }
     
     public String makePost(){
         return "addNewPost";
     }
-=======
-        
-        return "dashboard?faces-redirect=true";
-    }    
+
     
-    
-        
     
     public String showPosts(){
         /**
@@ -140,6 +135,4 @@ public class PostController extends BaseController{
         return "dashboard.xhtml?faces-redirect=true";
     }
     
-
->>>>>>> 015db3df5d7bacb19f883b9270a816d22d42a253
 }
