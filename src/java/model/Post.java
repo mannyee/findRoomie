@@ -40,7 +40,7 @@ public class Post implements Serializable {
     private int minimumAge;
     private int maximumAge;
     private String rommieQualities;
-    private List<String> images;
+    private String images;
 
     public String getTitle() {
         return title;
@@ -67,11 +67,11 @@ public class Post implements Serializable {
     @JoinTable(name="POST_COMMENTS")
     private List <Comment> comments;
     
-    public List<String> getImages() {
+    public String getImages() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(String images) {
         this.images = images;
     }
     

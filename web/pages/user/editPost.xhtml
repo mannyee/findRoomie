@@ -123,14 +123,14 @@
                                     </div>			
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Add photos</div>
+                                    <div class="panel-heading">Add photo</div>
                                     <div class="panel-body">
                                         <div class="col-sm-11">
                                             <div class="row" style="margin-left:10px;background:#E7F1FD;padding:10px;">
                                                 <div class="doc-data">
                                                     <div class="doc-data-wrapper">
                                                         <h:graphicImage width="100" height="100"  
-                                                                        title="profile picture" alt="profile picture"  url="#{postController.file1}"
+                                                                        title="profile picture" alt="profile picture"  url="#{postController.post.images}"
                                                                         />
 
 
@@ -170,6 +170,7 @@
 
 
                                         <h:inputHidden value="#{postController.post.id}" />
+
 
                                     </div>
                                 </div>

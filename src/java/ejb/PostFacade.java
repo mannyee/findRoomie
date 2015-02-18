@@ -28,6 +28,7 @@ import model.User;
  */
 @Stateless
 public class PostFacade extends AbstractFacade<Post> {
+
     @PersistenceContext(unitName = "findRoomiePU")
     private EntityManager em;
 
@@ -39,72 +40,105 @@ public class PostFacade extends AbstractFacade<Post> {
     public PostFacade() {
         super(Post.class);
     }
-    
-    public List<Post> findAllByUser(User userObj){
+
+    public List<Post> findAllByUser(User userObj) {
         /**
-         * We don't need to have userObj passed here.We can simply fetch 
-         * it again from the FacesContext object.
+         * We don't need to have userObj passed here.We can simply fetch it
+         * again from the FacesContext object.
          */
-        
+
         List<Post> posts = null;
-    
+
         try {
             User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userObj");
             System.out.println("user.email: " + user.getEmail());
-            
+
             String jpql = "SELECT p from Post p where p.postedBy = :user";
             Query query = getEntityManager().createQuery(jpql);
             query.setParameter("user", userObj);
-            
+
             posts = query.getResultList();
-            
+
         } catch (Exception e) {
-            
+
             Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
-        
-        return posts;            
+
+        return posts;
     }
-    
-    
-    public List<Post> search(String city, String state){
+
+    public List<Post> search(String city, String state) {
         List<Post> posts = new ArrayList<>();
-        
+
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Post> cq = cb.createQuery(Post.class);
         Root<Post> post = cq.from(Post.class);
-        
+
         cq.select(post);
-        
-        
+
         List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (city != null) {
             predicates.add(cb.like(
-                    post.get("addressCity"), "%"+city+"%")
+                    post.get("addressCity"), "%" + city + "%")
             );
         }
-        
-        
-        if(state != null){
+
+        if (state != null) {
             predicates.add(cb.equal(
                     post.get("addressState"), "%" + state + "%"));
         }
-        
-        
 
         cq.where(predicates.toArray(new Predicate[0]));
-        
-        
 
-        
-        
-        
-        
         TypedQuery<Post> q = getEntityManager().createQuery(cq);
-        
-        
+
         return q.getResultList();
     }
+
+    //update post
+    public int updatePost(Long post_id, String title, int totalRooms, int currentHolders,
+            String addressStreet, String addressCity, String addressState,
+            String roomDescription,
+            int expectedRoomieNumber, double pricePerMonth,
+            String requiredGender, String requiredCountry, int minimumAge,
+            int maximumAge, String rommieQualities, String images) {
+
+        String jpql = "UPDATE Post SET title= :title, "
+                + "totalRooms= :totalRooms , currentHolders= :currentHolders"
+                + " ,addressStreet = :addressStreet, "
+                + "addressCity=:addressCity, addressState=:addressState, "
+                + "roomDescription=:roomDescription, expectedRoomieNumber=:expectedRoomieNumber,"
+                + " pricePerMonth=:pricePerMonth,"
+                + "requiredGender=:requiredGender,"
+                + "requiredCountry=:requiredCountry,"
+                + "minimumAge=:minimumAge,"
+                + "maximumAge=:maximumAge,"
+                + "images=:images,"
+                + "rommieQualities=:rommieQualities"
+                + " WHERE id = :post_id";
+
+        Query query = em.createQuery(jpql, Post.class);
+
+        query.setParameter("post_id", post_id);
+        query.setParameter("title", title);
+        query.setParameter("totalRooms", totalRooms);
+        query.setParameter("currentHolders", currentHolders);
+        query.setParameter("addressStreet", addressStreet);
+        query.setParameter("addressCity", addressCity);
+        query.setParameter("addressState", addressState);
+        query.setParameter("roomDescription", roomDescription);
+        query.setParameter("expectedRoomieNumber", expectedRoomieNumber);
+        query.setParameter("pricePerMonth", pricePerMonth);
+        query.setParameter("requiredGender", requiredGender);
+        query.setParameter("requiredCountry", requiredCountry);
+        query.setParameter("minimumAge", minimumAge);
+        query.setParameter("maximumAge", maximumAge);
+        query.setParameter("rommieQualities", rommieQualities);
+        query.setParameter("images", images);
+
+        return query.executeUpdate();
+    }
+
 }

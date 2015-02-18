@@ -36,129 +36,128 @@ import model.User;
  */
 @ManagedBean
 @RequestScoped
-public class PostController extends BaseController{
-    
+public class PostController extends BaseController {
+
     @EJB
-    private PostFacade postFacade;    
+    private PostFacade postFacade;
     @EJB
     private UserFacade userFacade;
     private List<Post> allPosts;
     private Post myPost;
     private Comment comment;
-    
+
     private String extension;
-    
+
+    String fileName = "";
+
     /**
      * Creates a new instance of PostController
      */
     public PostController() {
-        
+
         System.out.println("inside the post controller constructor");
-        this.myPost = new Post();  
+        this.myPost = new Post();
     }
-    
-    public Post getPost(){
+
+    public Post getPost() {
         return myPost;
     }
-    
-    public void setPost(Post p){
+
+    public void setPost(Post p) {
         this.myPost = p;
     }
-    
-    public String postThisPost(){
-        String email = getEc().getRemoteUser();        
+
+    public String postThisPost() throws IOException {
+
+        String st = upload();
+
+        String email = getEc().getRemoteUser();
         User user = userFacade.findByEmail(email);
-        
+
+        String fileName = File.separator + "faces" + File.separator + "resources"
+                + File.separator + "room_pics" + File.separator + user.getId() + myPost.getImages();
+
+        myPost.setImages(fileName);
         myPost.setPostedBy(user);
         this.postFacade.create(myPost);
         System.out.println("okhere");
 //        return "listmyrooms?faces-redirect=true";
         return "dashboard?faces-redirect=true";
+
     }
-    
-    public String makePost(){
+
+    public String makePost() {
         return "addNewPost";
     }
 
-    
-    
-    public String showPosts(){
+    public String showPosts() {
         /**
-         * We could do 
-         * List<Post> allPosts = posts.findAll();
-         *  
-         * and then simply 
-         * 
+         * We could do List<Post> allPosts = posts.findAll();
+         *
+         * and then simply
+         *
          * return "showPosts";
-         * 
-         * In showPosts.xhtml, we can easily have allPosts available through the postController bean
-         * BUT this will cause the servlet to only forward the request not redirect.
-         * 
-         * And if we redirect, the bean will not be available. We will need flash scope to survive a
-         * redirect.
-         * 
+         *
+         * In showPosts.xhtml, we can easily have allPosts available through the
+         * postController bean BUT this will cause the servlet to only forward
+         * the request not redirect.
+         *
+         * And if we redirect, the bean will not be available. We will need
+         * flash scope to survive a redirect.
+         *
          * More: maxkatz.org/2010/07/27/learning-jsf2-using-flash-scope/
          */
-        HttpSession session = (HttpSession)getEc().getSession(false);
-        
-        allPosts = postFacade.findAllByUser((User)session.getAttribute("userObj"));
+        HttpSession session = (HttpSession) getEc().getSession(false);
+
+        allPosts = postFacade.findAllByUser((User) session.getAttribute("userObj"));
         getFlash().put("posts", allPosts);
-        
+
         return "showPosts?faces-redirect=true";
     }
 
-    
-    
-    public String roomDetails(){
-        
+    public String roomDetails() {
+
         return "roomDetails?faces-redirect=true";
     }
-    
-    
-    
+
     public Comment getComment() {
         return comment;
     }
 
-    
-    public void preRenderView(String postId){
+    public void preRenderView(String postId) {
         System.out.println("postId: " + postId);
-        
+
         Post post = postFacade.find(Long.parseLong(postId));
-        
+
         System.out.println("post.title: " + post.getTitle());
-        
+
         getFlash().put("post", post);
         setPost(post);
-        
-    
+
     }
-    
-    
-    
-    
-    public String submitComment(){
+
+    public String submitComment() {
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.comment.getDescription());
-        
+
         System.out.println("inside the submit commment");
-        
+
         return "dashboard.xhtml?faces-redirect=true";
     }
-    
-     //to update user profile
+
+    //to update user profile
     public String updatePostInfo() throws IOException {
 
         String st = upload();
 
         if (st.equalsIgnoreCase("success")) {
 
+            String email = getEc().getRemoteUser();
+            User user = userFacade.findByEmail(email);
+
             String fileName = File.separator + "faces" + File.separator + "resources"
-                    + File.separator + "room_pics" + File.separator + myPost.getId() + "." + extension;
+                    + File.separator + "room_pics" + File.separator + user.getId() + myPost.getImages();
 
-            List<String> img = new ArrayList<>();
-            img.add(fileName);
-
-            userFacade.updatePost(myPost.getId(), myPost.getTitle(),
+            postFacade.updatePost(myPost.getId(), myPost.getTitle(),
                     myPost.getTotalRooms(),
                     myPost.getCurrentHolders(),
                     myPost.getAddressStreet(), myPost.getAddressCity(),
@@ -168,7 +167,7 @@ public class PostController extends BaseController{
                     myPost.getRequiredGender(), myPost.getRequiredCountry(),
                     myPost.getMinimumAge(),
                     myPost.getMaximumAge(), myPost.getRommieQualities(),
-                    img);
+                    fileName);
 
             FacesMessage facesMessage = new FacesMessage("Updated Post Successfully");
             facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
@@ -213,10 +212,7 @@ public class PostController extends BaseController{
         String path = servletContext.getRealPath("");
         boolean file1Success = false;
 
-        String fileName = "";
-
         Part file1 = getFile1();
-        
 
         if (file1.getSize() > 0) {
             fileName = getFileNameFromPart(file1);
@@ -254,13 +250,18 @@ public class PostController extends BaseController{
             setMessage("Error, select atleast one file!");
         }
 
+        myPost.setImages(fileName);
+
+        String email = getEc().getRemoteUser();
+        User user = userFacade.findByEmail(email);
+
         File oldfile = new File(path + File.separator + "resources"
                 + File.separator + "room_pics" + File.separator + fileName);
 
         extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         File newfile = new File(path + File.separator + "resources"
-                + File.separator + "room_pics" + File.separator + myPost.getId() + "." + extension);
+                + File.separator + "room_pics" + File.separator + user.getId()+fileName);
 
         if (oldfile.renameTo(newfile)) {
             System.out.println("Rename succesful");
@@ -271,7 +272,6 @@ public class PostController extends BaseController{
 
             return "fail";
         }
-
     }
 
     public static String getFileNameFromPart(Part part) {
@@ -306,7 +306,7 @@ public class PostController extends BaseController{
             throw new ValidatorException(list);
         }
     }
-    
+
     private Part file1;
 
     public Part getFile1() {
@@ -317,5 +317,4 @@ public class PostController extends BaseController{
         this.file1 = file1;
     }
 
-    
 }

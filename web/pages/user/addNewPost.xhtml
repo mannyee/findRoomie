@@ -117,18 +117,24 @@
                                     </div>			
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Add photos</div>
+                                    <div class="panel-heading">Add photo</div>
                                     <div class="panel-body">
                                         <div class="col-sm-11">
                                             <div class="row" style="margin-left:10px;background:#E7F1FD;padding:10px;">
                                                 <div class="doc-data">
                                                     <div class="doc-data-wrapper">
-                                                        <input size="25" class="form-control info_upload_title" name="info_upload_title[]"  placeholder="title in english" type="text" />&nbsp;&nbsp;&nbsp;
-                                                        <input size="25"  style="display:inline;margin-top:10px;" name="doc_data[]" class="doc_data" type="file" />
-                                                        <span><a class="up-remove" href="javascript:void(0);"><?php echo 'Remove'; ?></a></span>
+                                                        
+                                                        
+                                                        <h:inputFile id="file"  value="#{postController.file1}" 
+                                                                     required="true"  requiredMessage="Profile pic is required"
+                                                                     validator="#{postController.validateFile}" >
+
+
+                                                        </h:inputFile>
+
                                                     </div>
-                                                    <div style="margin-top:10px;" id="max-upload-size">Maximum Filesize: 2 MB</div>
-                                                    <a id="up-add-more" href="#">Add More</a>
+                                                    <div style="margin-top:10px;" id="max-upload-size">Maximum Filesize: 3 MB</div>
+                                                        
                                                 </div>
                                                 <div class="clear" style="clear:both;"></div>
                                                 <strong><div style="display: none;" id="error_doc_data" class="subCont"><label for="doc_data"></label></div></strong>
@@ -139,7 +145,6 @@
                                 </div>
 
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Complete ad</div>
                                     <div class="panel-body">
 
                                         <div class="checkbox">
