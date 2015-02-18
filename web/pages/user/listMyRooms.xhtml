@@ -35,7 +35,7 @@
                                         <div class="row  listing-row">
                                             <div class="col-sm-3">
 
-                                                <a class="thumbnail " href="#" title="test">
+                                                <a class="thumbnail " href="#" title="okies hereo">
                                                     <img  alt="test1" title="test1" height="220" width="276" src="assets/images/no_preview.jpg"/>
 
                                                 </a>
@@ -44,13 +44,14 @@
                                             <div class="col-sm-8">
                                                 <h3>
                                                     <a href="#" class="">
-                                                        test1
+                                                        #{room.title}
                                                     </a>&nbsp;
                                                     <span style="font-size: 12px;">Price per month (#{room.pricePerMonth})</span>
                                                 </h3>
-                                                <p class="muted">No of Rooms <strong>2</strong></p>
-                                                <p class="muted">Posted By: Ram </p>
-                                                <p class="muted">Location : Fairfield, Iowa</p>
+                                                <p class="muted">No of Rooms <strong>#{room.totalRooms}</strong></p>
+                                                <p class="muted">Location : #{room.addressStreet}, #{room.addressCity}, #{room.addressState}</p>
+                                                <p class="muted">Description: #{room.roomDescription} </p>
+                                                <br/>
                                                 <p>
                                                     <span class="classified_links pull-right">
                                                         <a href="roomDetail.html" class="delete btn btn-info btn-sm">Edit/View</a>&nbsp;                                
