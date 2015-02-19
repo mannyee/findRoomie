@@ -84,18 +84,14 @@ public class SearchController extends BaseController{
     }
     
     public String listRooms(){
-//        System.out.println("selectedCity: " + selectedCity);
-//        System.out.println("selectedState: " + selectedState);
         //selectedCity = selectedCity.equals("") ? null : selectedCity;
        // gender = (gender != null && gender.equalsIgnoreCase("any")) ? null : gender;
         
-        System.out.println("price: " + getPrice());
         
-        getFlash().put("results", postFacade.search(selectedCity, selectedState, gender, price, noOfRooms));
+        allPosts = postFacade.search(selectedCity, selectedState, gender, price, noOfRooms);
         
-        int size = postFacade.search(selectedCity, selectedState, gender, price, noOfRooms).size();
+        getFlash().put("results", allPosts);
         
-        System.out.println("size: " + size);
         
         return "listMyRooms?faces-redirect=true";
     }

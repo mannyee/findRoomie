@@ -78,6 +78,7 @@ public class PostFacade extends AbstractFacade<Post> {
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
+        
         if (city != null) {
             predicates.add(cb.like(
                     cb.upper(post.get("addressCity")), "%" + city.toUpperCase() + "%")
@@ -93,10 +94,7 @@ public class PostFacade extends AbstractFacade<Post> {
             predicates.add(cb.equal(post.get("requiredGender"), gender));
         }
 
-        System.out.println("price: " + price);
-
         if (price != null) {
-            System.out.println("price: " + price);
             predicates.add(cb.equal(post.get("pricePerMonth"), price));
         }
 
