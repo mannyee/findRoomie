@@ -180,5 +180,7 @@ public class PostFacade extends AbstractFacade<Post> {
 
         return query.executeUpdate();
     }
+    
+    
 
 }

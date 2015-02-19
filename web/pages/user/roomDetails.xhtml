@@ -5,13 +5,14 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+
     <f:metadata>
         <f:event listener="#{postController.preRenderView(request.getParameter('postId'))}"
                  type="preRenderView" />
     </f:metadata>
-    
+
     <h:body>
         <ui:composition template="/pages/template/main_layout.xhtml">
             <ui:define name="content">
@@ -32,8 +33,8 @@
                     </div>
 
                     <div class="col-sm-9">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Details</div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Details</div>
                             <div class="panel-body">
                                 <div class="row">
                                     <h1>#{postController.getPost().title}</h1>
@@ -65,7 +66,7 @@
                                                                 <strong class="head">Description</strong>
                                                             </td>
                                                             <td>
-                                                               #{postController.getPost().roomDescription}
+                                                                #{postController.getPost().roomDescription}
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -100,7 +101,7 @@
                                                                 <strong class="head">Monthly Price</strong>
                                                             </td>
                                                             <td>
-                                                               #{postController.getPost().pricePerMonth}
+                                                                #{postController.getPost().pricePerMonth}
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -108,7 +109,7 @@
                                                                 <strong class="head">Preferred Age Group</strong>
                                                             </td>
                                                             <td>
-                                                               #{postController.getPost().minimumAge} - #{postController.getPost().maximumAge}
+                                                                #{postController.getPost().minimumAge} - #{postController.getPost().maximumAge}
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -116,7 +117,7 @@
                                                                 <strong class="head">Preferred Nationality</strong>
                                                             </td>
                                                             <td >
-                                                               #{postController.getPost().requiredCountry}
+                                                                #{postController.getPost().requiredCountry}
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -141,14 +142,63 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="panel panel-default">
+                                        <!-- Default panel contents -->
+                                        <div class="panel-heading">Existing Comments</div>
+                                        <div class="panel-body">
+                                            <f:view>
+                                                <h:form>
+                                                    <h:dataTable value="#{postController.allComments}" class="table" var="post">
+                                                        <h:column>
+                                                            <h:outputText value="#{item.description}"/>
+                                                        </h:column>
+                                                        <h:column>
+                                                            <h:outputText value="#{item.description}"/>
+                                                        </h:column>
+                                                    </h:dataTable>
+                                                </h:form>
+                                            </f:view>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h:form  class="form-vertical" id="commentForm">
+                                        <fieldset>
+                                            <div class="well">
+                                                <div>
+                                                    <h:messages id="errMsg" style="color:red"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Post Your Comment Here"/>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <h:inputText style="width:600px" value="#{commentController.selected.description}" required="true" p:placeholder="Description"   class="form-control " requiredMessage="Description is Required"></h:inputText>
+                                                            <input type="hidden" name="postid" value="#{postController.getPost().getId()}" />
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                </div>	
+                                                <h:commandButton action="#{commentController.saveComment()}" value="save" class="btn btn-primary">
+                                                </h:commandButton>
+                                            </div>
+
+
+                                        </fieldset>
+
+
+
+                                    </h:form>
+                                </div>
                             </div>
-                                                
-                            comments for the post are displayed here!!!
                         </div>
                     </div>
                 </div>
             </ui:define>
         </ui:composition>
     </h:body>
-    
+
 </html>

@@ -176,6 +176,7 @@ public class PostController extends BaseController {
                     myPost.getMinimumAge(),
                     myPost.getMaximumAge(), myPost.getRommieQualities(),
                     fileName, myPost.getPostStatus());
+
             FacesMessage facesMessage = new FacesMessage("Updated Post Successfully");
             facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -327,6 +328,10 @@ public class PostController extends BaseController {
 
     public void setFile1(Part file1) {
         this.file1 = file1;
+    }
+
+    public List<Comment> getAllComments() {
+        return this.myPost.getComments();
     }
 
 }
