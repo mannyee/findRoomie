@@ -5,8 +5,10 @@ import ejb.UserFacade;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import model.Comment;
 import model.Post;
 import model.User;
@@ -22,7 +24,10 @@ public class CommentController extends BaseController {
     private Comment selected;
     @Inject
     private PostFacade postFacade;
+
+    @Inject
     private UserFacade userFacade;
+    private User user;
 
     public Comment getSelected() {
         return selected;
@@ -35,11 +40,18 @@ public class CommentController extends BaseController {
     public String saveComment() {
         String postid = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("postid");
         Long pid = Long.valueOf(postid);
-        
-        String email = getEc().getRemoteUser();
-        User user = userFacade.findByEmail(email);
-        getSelected().setUserid(user);
-        
+
+        HttpServletRequest hsr = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        String userName = ec.getRemoteUser();
+
+        user = userFacade.findByEmail(userName);
+
+        if (user != null) {
+            getSelected().setUserid(user);
+
+        }
+
         Post selectedPost = postFacade.find(pid);
         selectedPost.getComments().add(getSelected());
         postFacade.edit(selectedPost);

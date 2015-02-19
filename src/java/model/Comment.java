@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -12,11 +14,17 @@ import javax.persistence.Id;
  */
 @Entity
 public class Comment implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String description;
+
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    @OneToOne
+    private User userid;
 
     public Long getId() {
         return id;
@@ -24,6 +32,14 @@ public class Comment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUserid() {
+        return userid;
+    }
+
+    public void setUserid(User userid) {
+        this.userid = userid;
     }
 
     @Override
@@ -58,5 +74,5 @@ public class Comment implements Serializable {
     public String toString() {
         return "model.Comment[ id=" + id + " ]";
     }
-    
+
 }

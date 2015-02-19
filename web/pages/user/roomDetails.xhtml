@@ -151,10 +151,10 @@
                                                 <h:form>
                                                     <h:dataTable value="#{postController.allComments}" class="table" var="post">
                                                         <h:column>
-                                                            <h:outputText value="#{item.description}"/>
+                                                            <h:outputText value="#{post.description}"/>
                                                         </h:column>
                                                         <h:column>
-                                                            <h:outputText value="#{item.description}"/>
+                                                            Commented by:&nbsp;<h:outputText value="#{post.userid.firstName}"/>
                                                         </h:column>
                                                     </h:dataTable>
                                                 </h:form>
