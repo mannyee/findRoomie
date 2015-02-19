@@ -145,7 +145,7 @@
                                 <div class="row">
                                     <div class="panel panel-default">
                                         <!-- Default panel contents -->
-                                        <div class="panel-heading">Existing Comments</div>
+                                        <div class="panel-heading">Recent Comments</div>
                                         <div class="panel-body">
                                             <f:view>
                                                 <h:form>
@@ -153,8 +153,8 @@
                                                         <h:column>
                                                             <h:outputText value="#{post.description}"/>
                                                         </h:column>
-                                                        <h:column>
-                                                            Commented by:&nbsp;<h:outputText value="#{post.userid.firstName}"/>
+                                                        <h:column >
+                                                            <span style="float:right">By :&nbsp;<h:outputText  value="#{post.userid.firstName}"/></span>
                                                         </h:column>
                                                     </h:dataTable>
                                                 </h:form>
