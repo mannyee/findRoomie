@@ -244,12 +244,18 @@ public class SignupController implements Serializable {
     //to update user profile
     public String updateUserRegInfo() throws IOException {
 
-        String st = upload();
-
+        String st = "success";
+        if (getFile1() != null) {
+            st = upload();
+        }
         if (st.equalsIgnoreCase("success")) {
 
-            String fileName = File.separator + "faces" + File.separator + "resources"
-                    + File.separator + "profile_pic" + File.separator + id + "." + extension;
+            String fileName = "";
+
+            if (getFile1() != null) {
+                fileName = File.separator + "faces" + File.separator + "resources"
+                        + File.separator + "profile_pic" + File.separator + id + "." + extension;
+            }
 
             userFacade.updateProfile(id, email, firstName, lastName,
                     emailSessionBean.encryptToSha256(password), phoneNumber, addressLine1, addressLine2,
@@ -371,20 +377,22 @@ public class SignupController implements Serializable {
 
     public void validateFile(FacesContext con, UIComponent comp, Object value) {
         Part p = (Part) value;
-        List<FacesMessage> list = new ArrayList<>();
-        if (p.getSize() == 0) {
-            list.add(new FacesMessage("File Size too small"));
-        }
-        if (p.getSize() > BUFFER_SIZE) {
-            list.add(new FacesMessage("File Size too Big"));
-        }
+        if (p != null) {
+            List<FacesMessage> list = new ArrayList<>();
+            if (p.getSize() == 0) {
+                list.add(new FacesMessage("File Size too small"));
+            }
+            if (p.getSize() > BUFFER_SIZE) {
+                list.add(new FacesMessage("File Size too Big"));
+            }
 
-        if (!("image/png".equals(p.getContentType()) || "image/jpeg".equals(p.getContentType()))) {
-            list.add(new FacesMessage("not an image file"));
-        }
+            if (!("image/png".equals(p.getContentType()) || "image/jpeg".equals(p.getContentType()))) {
+                list.add(new FacesMessage("not an image file"));
+            }
 
-        if (!list.isEmpty()) {
-            throw new ValidatorException(list);
+            if (!list.isEmpty()) {
+                throw new ValidatorException(list);
+            }
         }
     }
 }

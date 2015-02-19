@@ -148,15 +148,22 @@ public class PostController extends BaseController {
     //to update user profile
     public String updatePostInfo() throws IOException {
 
-        String st = upload();
-
+        String st = "success";
+        if (getFile1() != null) {
+            st = upload();
+        }
         if (st.equalsIgnoreCase("success")) {
 
             String email = getEc().getRemoteUser();
             User user = userFacade.findByEmail(email);
 
-            String fileName = File.separator + "faces" + File.separator + "resources"
-                    + File.separator + "room_pics" + File.separator + user.getId() + myPost.getImages();
+            String fileName = "";
+
+            if (getFile1() != null) {
+
+                fileName = File.separator + "faces" + File.separator + "resources"
+                        + File.separator + "room_pics" + File.separator + user.getId() + myPost.getImages();
+            }
 
             postFacade.updatePost(myPost.getId(), myPost.getTitle(),
                     myPost.getTotalRooms(),
@@ -168,8 +175,7 @@ public class PostController extends BaseController {
                     myPost.getRequiredGender(), myPost.getRequiredCountry(),
                     myPost.getMinimumAge(),
                     myPost.getMaximumAge(), myPost.getRommieQualities(),
-                    fileName,myPost.getPostStatus());
-
+                    fileName, myPost.getPostStatus());
             FacesMessage facesMessage = new FacesMessage("Updated Post Successfully");
             facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -262,7 +268,7 @@ public class PostController extends BaseController {
         extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         File newfile = new File(path + File.separator + "resources"
-                + File.separator + "room_pics" + File.separator + user.getId()+fileName);
+                + File.separator + "room_pics" + File.separator + user.getId() + fileName);
 
         if (oldfile.renameTo(newfile)) {
             System.out.println("Rename succesful");
@@ -273,6 +279,7 @@ public class PostController extends BaseController {
 
             return "fail";
         }
+
     }
 
     public static String getFileNameFromPart(Part part) {
@@ -291,20 +298,24 @@ public class PostController extends BaseController {
 
     public void validateFile(FacesContext con, UIComponent comp, Object value) {
         Part p = (Part) value;
-        List<FacesMessage> list = new ArrayList<>();
-        if (p.getSize() == 0) {
-            list.add(new FacesMessage("File Size too small"));
-        }
-        if (p.getSize() > BUFFER_SIZE) {
-            list.add(new FacesMessage("File Size too Big"));
-        }
 
-        if (!("image/png".equals(p.getContentType()) || "image/jpeg".equals(p.getContentType()))) {
-            list.add(new FacesMessage("not an image file"));
-        }
+        if (p != null) {
+            List<FacesMessage> list = new ArrayList<>();
+            if (p.getSize() == 0) {
+                list.add(new FacesMessage("File Size too small"));
+            }
+            if (p.getSize() > BUFFER_SIZE) {
+                list.add(new FacesMessage("File Size too Big"));
+            }
 
-        if (!list.isEmpty()) {
-            throw new ValidatorException(list);
+            if (!("image/png".equals(p.getContentType()) || "image/jpeg".equals(p.getContentType()))) {
+                list.add(new FacesMessage("not an image file"));
+            }
+
+            if (!list.isEmpty()) {
+                throw new ValidatorException(list);
+            }
+
         }
     }
 

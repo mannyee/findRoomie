@@ -62,12 +62,23 @@ public class UserFacade extends AbstractFacade<User> {
 
         System.out.println(user_id + "=" + email + "=" + firstName + "=" + lastName + "=" + password);
 
-        String jpql = "UPDATE User SET firstName= :firstName, "
-                + "lastName= :lastName , email= :email"
-                + " ,password = :pwd, "
-                + "phoneNumber=:phoneNumber, addressLine1=:addressLine1, "
-                + "addressLine2=:addressLine2, gender=:gender, age=:age,"
-                + "profilePic=:profilePic WHERE id = :user_id";
+        String jpql = "";
+
+        if (profilePic.length() > 1) {
+            jpql = "UPDATE User SET firstName= :firstName, "
+                    + "lastName= :lastName , email= :email"
+                    + " ,password = :pwd, "
+                    + "phoneNumber=:phoneNumber, addressLine1=:addressLine1, "
+                    + "addressLine2=:addressLine2, gender=:gender, age=:age,"
+                    + "profilePic=:profilePic WHERE id = :user_id";
+        } else {
+            jpql = "UPDATE User SET firstName= :firstName, "
+                    + "lastName= :lastName , email= :email"
+                    + " ,password = :pwd, "
+                    + "phoneNumber=:phoneNumber, addressLine1=:addressLine1, "
+                    + "addressLine2=:addressLine2, gender=:gender, age=:age "
+                    + " WHERE id = :user_id";
+        }
 
         Query query = em.createQuery(jpql, User.class);
 
@@ -81,13 +92,11 @@ public class UserFacade extends AbstractFacade<User> {
         query.setParameter("addressLine2", addressLine2);
         query.setParameter("gender", gender);
         query.setParameter("age", age);
-        query.setParameter("profilePic", profilePic);
+        if (profilePic.length() > 1) {
+            query.setParameter("profilePic", profilePic);
+        }
 
         return query.executeUpdate();
     }
-    
-    
-    
-     
 
 }

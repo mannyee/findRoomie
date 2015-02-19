@@ -66,9 +66,8 @@ public class PostFacade extends AbstractFacade<Post> {
 
         return posts;
     }
- 
-    
-    public List<Post> search(String city, String state, String gender, Double price, Integer numberOfRooms){
+
+    public List<Post> search(String city, String state, String gender, Double price, Integer numberOfRooms) {
         List<Post> posts = new ArrayList<>();
 
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
@@ -81,7 +80,7 @@ public class PostFacade extends AbstractFacade<Post> {
 
         if (city != null) {
             predicates.add(cb.like(
-                    cb.upper(post.get("addressCity")), "%"+city.toUpperCase()+"%")
+                    cb.upper(post.get("addressCity")), "%" + city.toUpperCase() + "%")
             );
         }
 
@@ -89,20 +88,19 @@ public class PostFacade extends AbstractFacade<Post> {
             predicates.add(cb.equal(
                     cb.upper(post.get("addressState")), "%" + state.toUpperCase() + "%"));
         }
-        
-        if(gender != null){
+
+        if (gender != null) {
             predicates.add(cb.equal(post.get("requiredGender"), gender));
         }
-        
+
         System.out.println("price: " + price);
-        
-        if(price != null){
+
+        if (price != null) {
             System.out.println("price: " + price);
             predicates.add(cb.equal(post.get("pricePerMonth"), price));
         }
-        
-        
-        if(numberOfRooms != null){
+
+        if (numberOfRooms != null) {
             predicates.add(cb.equal(post.get("totalRooms"), numberOfRooms));
         }
 
@@ -121,20 +119,40 @@ public class PostFacade extends AbstractFacade<Post> {
             String requiredGender, String requiredCountry, int minimumAge,
             int maximumAge, String rommieQualities, String images, String postStatus) {
 
-        String jpql = "UPDATE Post SET title= :title, "
-                + "totalRooms= :totalRooms , currentHolders= :currentHolders"
-                + " ,addressStreet = :addressStreet, "
-                + "addressCity=:addressCity, addressState=:addressState, "
-                + "roomDescription=:roomDescription, expectedRoomieNumber=:expectedRoomieNumber,"
-                + " pricePerMonth=:pricePerMonth,"
-                + "requiredGender=:requiredGender,"
-                + "requiredCountry=:requiredCountry,"
-                + "minimumAge=:minimumAge,"
-                + "maximumAge=:maximumAge,"
-                + "images=:images,"
-                + "rommieQualities=:rommieQualities,"
-                + "postStatus= :postStatus "
-                + " WHERE id = :post_id";
+        String jpql = "";
+
+        if (images.length() > 1) {
+            jpql = "UPDATE Post SET title= :title, "
+                    + "totalRooms= :totalRooms , currentHolders= :currentHolders"
+                    + " ,addressStreet = :addressStreet, "
+                    + "addressCity=:addressCity, addressState=:addressState, "
+                    + "roomDescription=:roomDescription, expectedRoomieNumber=:expectedRoomieNumber,"
+                    + " pricePerMonth=:pricePerMonth,"
+                    + "requiredGender=:requiredGender,"
+                    + "requiredCountry=:requiredCountry,"
+                    + "minimumAge=:minimumAge,"
+                    + "maximumAge=:maximumAge,"
+                    + "images=:images,"
+                    + "rommieQualities=:rommieQualities,"
+                    + "postStatus= :postStatus "
+                    + " WHERE id = :post_id";
+
+        } else {
+
+            jpql = "UPDATE Post SET title= :title, "
+                    + "totalRooms= :totalRooms , currentHolders= :currentHolders"
+                    + " ,addressStreet = :addressStreet, "
+                    + "addressCity=:addressCity, addressState=:addressState, "
+                    + "roomDescription=:roomDescription, expectedRoomieNumber=:expectedRoomieNumber,"
+                    + " pricePerMonth=:pricePerMonth,"
+                    + "requiredGender=:requiredGender,"
+                    + "requiredCountry=:requiredCountry,"
+                    + "minimumAge=:minimumAge,"
+                    + "maximumAge=:maximumAge,"
+                    + "rommieQualities=:rommieQualities,"
+                    + "postStatus= :postStatus "
+                    + " WHERE id = :post_id";
+        }
 
         Query query = em.createQuery(jpql, Post.class);
 
@@ -153,7 +171,10 @@ public class PostFacade extends AbstractFacade<Post> {
         query.setParameter("minimumAge", minimumAge);
         query.setParameter("maximumAge", maximumAge);
         query.setParameter("rommieQualities", rommieQualities);
-        query.setParameter("images", images);
+
+        if (images.length() > 1) {
+            query.setParameter("images", images);
+        }
 
         query.setParameter("postStatus", postStatus);
 
