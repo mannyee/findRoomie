@@ -37,7 +37,7 @@ public class EmailSessionBean {
     private String from = "mmaharjan@mum.edu";
     private boolean auth = true;
     private String username = "mmaharjan@mum.edu";
-    private String password = "CatsAndD0gs";
+    private String password = "S0m3P@ssword";
     private Protocol protocol = Protocol.SMTPS;
     private boolean debug = true;
 
